@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_URL = "/graphql";
 
-export const fetchTracks = async (filters) => { // <-- tar filters som argument
+export const fetchTracks = async (filters) => {
     const query = `
 query GetTracks($filter: TrackFilterInput, $limit: Int) {
   tracks(filter: $filter, limit: $limit) {
@@ -12,6 +12,7 @@ query GetTracks($filter: TrackFilterInput, $limit: Int) {
       energy
       tempo
       danceability
+      key
     }
   }
 }
@@ -25,7 +26,10 @@ query GetTracks($filter: TrackFilterInput, $limit: Int) {
             minTempo: filters.tempoMin,
             maxTempo: filters.tempoMax,
             minDanceability: filters.danceabilityMin,
-            maxDanceability: filters.danceabilityMax
+            maxDanceability: filters.danceabilityMax,
+            ...(filters.key !== null && filters.key !== undefined
+                ? { key: filters.key }
+                : {})
         }
     };
 
