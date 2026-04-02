@@ -67,6 +67,75 @@ export default function Filters({ filters, setFilters }) {
         }
       />
 
+      <label>
+  Popularity: {filters.popularityMin} - {filters.popularityMax}
+</label>
+<Slider
+  range
+  min={0}
+  max={100}
+  value={[filters.popularityMin, filters.popularityMax]}
+  onChange={(val) =>
+    handleRange("popularityMin", "popularityMax", val)
+  }
+/>
+
+<label>
+  Acousticness: {filters.acousticnessMin} - {filters.acousticnessMax}
+</label>
+<Slider
+  range
+  min={0}
+  max={1}
+  step={0.01}
+  value={[filters.acousticnessMin, filters.acousticnessMax]}
+  onChange={(val) =>
+    handleRange("acousticnessMin", "acousticnessMax", val)
+  }
+/>
+
+<label>Explicit</label>
+<select
+  value={filters.explicit ?? ""}
+  onChange={(e) =>
+    setFilters((prev) => ({
+      ...prev,
+      explicit:
+        e.target.value === ""
+          ? null
+          : e.target.value === "true"
+    }))
+  }
+>
+  <option value="">All</option>
+  <option value="true">Explicit</option>
+  <option value="false">Clean</option>
+</select>
+
+<label>Genre</label>
+<input
+  type="text"
+  value={filters.genre}
+  onChange={(e) =>
+    setFilters((prev) => ({
+      ...prev,
+      genre: e.target.value
+    }))
+  }
+/>
+
+<label>Track name</label>
+<input
+  type="text"
+  value={filters.name}
+  onChange={(e) =>
+    setFilters((prev) => ({
+      ...prev,
+      name: e.target.value
+    }))
+  }
+/>
+
       <label>Key</label>
       <select
         value={filters.key ?? ""}

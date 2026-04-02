@@ -13,6 +13,13 @@ const [filters, setFilters] = useState({
   tempoMax: 300,
   danceabilityMin: 0,
   danceabilityMax: 1,
+  popularityMin: 0,
+  popularityMax: 100,
+  acousticnessMin: 0,
+  acousticnessMax: 1,
+  explicit: null,
+  genre: "",
+  name: "",
   key: null
 });
 

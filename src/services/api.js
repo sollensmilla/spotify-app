@@ -13,6 +13,10 @@ query GetTracks($filter: TrackFilterInput, $limit: Int) {
       tempo
       danceability
       key
+      popularity
+      acousticness
+      explicit
+      track_genre
     }
   }
 }
@@ -27,6 +31,14 @@ query GetTracks($filter: TrackFilterInput, $limit: Int) {
             maxTempo: filters.tempoMax,
             minDanceability: filters.danceabilityMin,
             maxDanceability: filters.danceabilityMax,
+            minPopularity: filters.popularityMin,
+            maxPopularity: filters.popularityMax,
+            minAcousticness: filters.acousticnessMin,
+            maxAcousticness: filters.acousticnessMax,
+            ...(filters.explicit !== null && { explicit: filters.explicit }),
+            ...(filters.genre && { genre: filters.genre }),
+            ...(filters.name && { name: filters.name }),
+
             ...(filters.key !== null && filters.key !== undefined
                 ? { key: filters.key }
                 : {})

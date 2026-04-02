@@ -20,9 +20,16 @@ export default function TrackList({ tracks }) {
       <h3>Tracks</h3>
 
       {tracks.map((track) => (
-        <div key={track.id}>
-          <strong>{track.track_name}</strong> — Energy: {track.energy} — Tempo: {track.tempo} — Danceability: {track.danceability} - Key: {keyMap[track.key]}
-        </div>
+<div key={track.id}>
+  <strong>{track.track_name}</strong>
+  — 🎧 {track.track_genre}
+  — 🔥 {track.energy}
+  — 💃 {track.danceability}
+  — 🎵 {track.tempo} BPM
+  — ⭐ {track.popularity}
+  — 🎸 Acoustic: {track.acousticness}
+  — {track.explicit ? "🅴 Explicit" : "Clean"}
+</div>
       ))}
     </div>
   );
