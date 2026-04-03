@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchTracks } from "../services/trackService";
 import Filters from "../components/Filters";
-import TrackList from "../components/TrackList";
+import TrackList from "../components/tracks/TrackList";
 import InsightBox from "../components/InsightBox";
 import ChartView from "../components/charts/ChartView";
 
