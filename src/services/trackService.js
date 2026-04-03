@@ -1,26 +1,24 @@
-import axios from "axios";
-
-const API_URL = "/graphql";
+import apiClient from "./apiClient";
 
 export const fetchTracks = async (filters) => {
     const query = `
-query GetTracks($filter: TrackFilterInput, $limit: Int) {
-  tracks(filter: $filter, limit: $limit) {
-    items {
-      id
-      track_name
-      energy
-      tempo
-      danceability
-      key
-      popularity
-      acousticness
-      explicit
-      track_genre
+    query GetTracks($filter: TrackFilterInput, $limit: Int) {
+      tracks(filter: $filter, limit: $limit) {
+        items {
+          id
+          track_name
+          energy
+          tempo
+          danceability
+          key
+          popularity
+          acousticness
+          explicit
+          track_genre
+        }
+      }
     }
-  }
-}
-`;
+  `;
 
     const variables = {
         limit: 5,
@@ -35,19 +33,18 @@ query GetTracks($filter: TrackFilterInput, $limit: Int) {
             maxPopularity: filters.popularityMax,
             minAcousticness: filters.acousticnessMin,
             maxAcousticness: filters.acousticnessMax,
+
             ...(filters.explicit !== null && { explicit: filters.explicit }),
             ...(filters.genre && { genre: filters.genre }),
             ...(filters.name && { name: filters.name }),
-
             ...(filters.key !== null && filters.key !== undefined
                 ? { key: filters.key }
-                : {})
-        }
+                : {}),
+        },
     };
 
     try {
-        const res = await axios.post(API_URL, { query, variables });
-        console.log("Fetched tracks:", res.data);
+        const res = await apiClient.post("", { query, variables });
         return res.data.data.tracks.items;
     } catch (err) {
         console.error("Error fetching tracks:", err.response?.data || err);
