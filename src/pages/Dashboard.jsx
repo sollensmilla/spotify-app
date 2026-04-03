@@ -3,7 +3,7 @@ import { fetchTracks } from "../services/trackService";
 import Filters from "../components/Filters";
 import TrackList from "../components/TrackList";
 import InsightBox from "../components/InsightBox";
-import ChartView from "../components/ChartView";
+import ChartView from "../components/charts/ChartView";
 
 export default function Dashboard() {
 const [filters, setFilters] = useState({
