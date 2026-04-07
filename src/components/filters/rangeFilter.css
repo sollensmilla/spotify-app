@@ -1,0 +1,34 @@
+.rc-slider {
+  margin: 20px 0;
+}
+
+.rc-slider-track {
+  background: linear-gradient(90deg, #1db954, #1ed760);
+  height: 8px;
+  border-radius: 999px;
+}
+
+.rc-slider-rail {
+  background-color: #ddd;
+  height: 8px;
+  border-radius: 999px;
+}
+
+.rc-slider-handle {
+  border: none;
+  background-color: #1db954;
+  width: 18px;
+  height: 18px;
+  margin-top: -5px; 
+  box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.2);
+  transition: all 0.2s ease;
+}
+
+.rc-slider-handle:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 5px rgba(29, 185, 84, 0.3);
+}
+
+.rc-slider-handle:active {
+  transform: scale(1.3);
+}

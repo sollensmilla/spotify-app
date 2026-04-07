@@ -1,5 +1,6 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import "./rangeFilter.css";
 
 export default function RangeFilter({
   label,
@@ -11,10 +12,9 @@ export default function RangeFilter({
 }) {
   return (
     <div>
-      <label>
-        {label}: {value[0]} - {value[1]}
-      </label>
-
+<label style={{ fontWeight: "bold", display: "block", marginBottom: "5px" }}>
+  {label}: {value[0]} - {value[1]}
+</label>
       <Slider
         range
         min={min}
