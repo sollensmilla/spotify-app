@@ -29,6 +29,7 @@ value={[
           onChange={(val) =>
             handleRangeChange(setFilters, f.minKey, f.maxKey, val)
           }
+          color={f.color} 
         />
       ))}
 

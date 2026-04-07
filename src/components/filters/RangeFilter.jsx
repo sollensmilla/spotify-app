@@ -9,6 +9,7 @@ export default function RangeFilter({
   step,
   value,
   onChange,
+  color,
 }) {
   return (
     <div>
@@ -22,6 +23,8 @@ export default function RangeFilter({
         step={step}
         value={value}
         onChange={onChange}
+        className="custom-slider"
+        style={{ "--slider-color": color }}
       />
     </div>
   );

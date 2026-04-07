@@ -1,6 +1,7 @@
 export const rangeFilters = [
   {
     label: "Energy",
+    color: "linear-gradient(90deg, #cb5656, #930303)",
     minKey: "energyMin",
     maxKey: "energyMax",
     min: 0,
@@ -9,6 +10,7 @@ export const rangeFilters = [
   },
   {
     label: "Tempo",
+    color: "linear-gradient(90deg, #9ee49e, #1b6901)",
     minKey: "tempoMin",
     maxKey: "tempoMax",
     min: 0,
@@ -16,6 +18,7 @@ export const rangeFilters = [
   },
   {
     label: "Danceability",
+    color: "linear-gradient(90deg, #c079be, #7a066e)",
     minKey: "danceabilityMin",
     maxKey: "danceabilityMax",
     min: 0,
@@ -24,6 +27,7 @@ export const rangeFilters = [
   },
   {
     label: "Popularity",
+    color: "linear-gradient(90deg, #9be5de, #0c8e92)",
     minKey: "popularityMin",
     maxKey: "popularityMax",
     min: 0,
@@ -31,6 +35,7 @@ export const rangeFilters = [
   },
   {
     label: "Acousticness",
+    color: "linear-gradient(90deg, #c9e3f9, #0c0090)",
     minKey: "acousticnessMin",
     maxKey: "acousticnessMax",
     min: 0,
