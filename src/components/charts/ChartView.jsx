@@ -8,6 +8,7 @@ import {
 
 import ChartScatter from "./ChartScatter";
 import { calculateAverages } from "./chartUtils";
+import LegendItem from "./LegendItem";
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
@@ -61,9 +62,17 @@ const options = {
 };
 
   return (
-    <div style={{ marginTop: "2rem" }}>
-      <h3>Visualization</h3>
-      <ChartScatter data={data} options={options} />
-    </div>
+<div style={{ marginTop: "2rem" }}>
+  <h3>Visualization</h3>
+
+  <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginBottom: "0.5rem" }}>
+    <LegendItem color="red" label="High energy (> 0.7)" />
+    <LegendItem color="orange" label="Medium energy (0.4 - 0.7)" />
+    <LegendItem color="blue" label="Low energy (< 0.4)" />
+    <LegendItem color="black" label="Average" />
+  </div>
+
+  <ChartScatter data={data} options={options} />
+</div>
   );
 }
