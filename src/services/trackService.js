@@ -21,7 +21,7 @@ export const fetchTracks = async (filters) => {
   `;
 
     const variables = {
-        limit: 5,
+        limit: 25,
         filter: {
             minEnergy: filters.energyMin,
             maxEnergy: filters.energyMax,
