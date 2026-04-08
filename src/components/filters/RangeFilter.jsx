@@ -1,6 +1,5 @@
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
-import "./rangeFilter.css";
 
 export default function RangeFilter({
   label,
@@ -11,11 +10,12 @@ export default function RangeFilter({
   onChange,
   color,
 }) {
-  return (
-    <div>
-<label style={{ fontWeight: "bold", display: "block", marginBottom: "5px" }}>
-  {label}: {value[0]} - {value[1]}
-</label>
+ return (
+    <div className="filter-group"> 
+      <label className="filter-label"> 
+        {label}: {value[0]} - {value[1]}
+      </label>
+
       <Slider
         range
         min={min}
@@ -24,7 +24,7 @@ export default function RangeFilter({
         value={value}
         onChange={onChange}
         className="custom-slider"
-        style={{ "--slider-color": color }}
+        style={{ "--slider-color": color || "#1db954" }}
       />
     </div>
   );

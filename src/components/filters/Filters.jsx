@@ -1,6 +1,7 @@
 import RangeFilter from "./RangeFilter";
 import SelectFilter from "./SelectFilter";
 import TextFilter from "./TextFilter";
+import "./filters.css";
 
 import {
   rangeFilters,
@@ -12,7 +13,7 @@ import { handleRangeChange, keyOptions } from "./filterUtils";
 
 export default function Filters({ filters, setFilters }) {
   return (
-    <div>
+    <div className="filters-container">
       <h3>Filters</h3>
 
       {rangeFilters.map((f) => (
