@@ -1,0 +1,39 @@
+.track-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    display: block;
+    max-height: 500px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.track-table thead {
+    background: #f5f5f5;
+    position: sticky;
+    top: 0;
+
+}
+
+.track-table th {
+    text-align: left;
+    padding: 12px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #666;
+}
+
+.track-table td {
+    padding: 12px;
+    border-top: 1px solid #eee;
+}
+
+.track-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.track-table tbody tr:nth-child(even) {
+    background: #fcfcfc;
+}

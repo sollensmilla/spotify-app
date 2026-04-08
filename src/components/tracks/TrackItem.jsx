@@ -4,16 +4,16 @@ export default function TrackItem({ track }) {
   if (!track) return null;
 
   return (
-    <div>
-      <strong>{track.track_name}</strong>
-      — 🎧 {track.track_genre}
-      — 🔥 {track.energy}
-      — 💃 {track.danceability}
-      — 🎵 {track.tempo} BPM
-      — 🎼 {formatKey(track.key)}
-      — ⭐ {track.popularity}
-      — 🎸 Acoustic: {track.acousticness}
-      — {track.explicit ? "🅴 Explicit" : "Clean"}
-    </div>
+    <tr>
+      <td>{track.track_name}</td>
+      <td>{track.track_genre}</td>
+      <td>{track.energy.toFixed(2)}</td>
+      <td>{track.danceability.toFixed(2)}</td>
+      <td>{track.tempo}</td>
+      <td>{formatKey(track.key)}</td>
+      <td>{track.popularity}</td>
+      <td>{track.acousticness.toFixed(2)}</td>
+      <td>{track.explicit ? "Yes" : "No"}</td>
+    </tr>
   );
 }

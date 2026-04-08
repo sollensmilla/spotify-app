@@ -33,17 +33,26 @@ const [filters, setFilters] = useState({
     return () => clearTimeout(timeout);
   }, [filters]);
 
-  return (
-    <div>
-      <h1>Find your vibe</h1>
+return (
+  <div style={{ padding: "2rem" }}>
+    <h1>Find your vibe</h1>
 
-      <Filters filters={filters} setFilters={setFilters} />
+    <div style={{ display: "flex", gap: "2rem" }}>
+      
+      <div style={{ flex: 1 }}>
+        <Filters filters={filters} setFilters={setFilters} />
+      </div>
 
-      <InsightBox tracks={tracks} />
+      <div style={{ flex: 1.5 }}>
+        <TrackList tracks={tracks} />
+      </div>
 
-      <ChartView tracks={tracks} />
-
-      <TrackList tracks={tracks} />
     </div>
-  );
+
+    <div style={{ marginTop: "2rem" }}>
+      <InsightBox tracks={tracks} />
+      <ChartView tracks={tracks} />
+    </div>
+  </div>
+);
 }
