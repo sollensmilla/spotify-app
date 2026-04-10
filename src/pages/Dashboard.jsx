@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { fetchTracks } from "../services/trackService";
-import Filters from "../components/filters/Filters";
-import TrackList from "../components/tracks/TrackList";
-import InsightBox from "../components/insight/InsightBox";
-import ChartView from "../components/charts/ChartView";
+import Filters from "../components/dashboard/filters/Filters";
+import TrackList from "../components/dashboard/tracks/TrackList";
+import InsightBox from "../components/dashboard/insight/InsightBox";
+import ChartView from "../components/dashboard/charts/ChartView";
 
 export default function Dashboard() {
 const [filters, setFilters] = useState({
