@@ -1,7 +1,26 @@
+import { useState } from "react";
 import Dashboard from "./pages/Dashboard";
+import AnalyticsView from "./pages/Analytics";
 
 function App() {
-  return <Dashboard />;
+ const [view, setView] = useState("dashboard");
+
+  return (
+    <div>
+      <div style={{ padding: "1rem" }}>
+        <button onClick={() => setView("dashboard")}>
+          Dashboard
+        </button>
+
+        <button onClick={() => setView("analytics")}>
+          Analytics
+        </button>
+      </div>
+
+      {view === "dashboard" && <Dashboard />}
+      {view === "analytics" && <AnalyticsView />}
+    </div>
+  );
 }
 
 export default App;
