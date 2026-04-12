@@ -12,6 +12,12 @@ function App() {
           Dashboard
         </button>
 
+        <button onClick={() => {
+  window.location.href = "http://localhost:3001/auth/github"
+}}>
+  Login with GitHub
+</button>
+
         <button onClick={() => setView("analytics")}>
           Analytics
         </button>

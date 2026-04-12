@@ -10,7 +10,7 @@ export default function AnalyticsView() {
   useEffect(() => {
     fetchTracks({}).then(setTracks);
   }, []);
-
+""
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Analytics</h1>
