@@ -6,6 +6,7 @@ import {
   GOOGLE_CLIENT_SECRET
 } from '../config/env.js'
 import { loginOrRegister } from '../config/api.js'
+import jwt from 'jsonwebtoken'
 
 export class AuthController {
 
@@ -15,43 +16,57 @@ export class AuthController {
   }
 
   async githubCallback(req, res) {
-    const { code } = req.query
+    try {
+      const { code } = req.query
+      if (!code) return res.redirect("http://localhost:5173")
 
-    const params = new URLSearchParams()
-    params.append('client_id', CLIENT_ID)
-    params.append('client_secret', CLIENT_SECRET)
-    params.append('code', code)
+      const params = new URLSearchParams()
+      params.append('client_id', CLIENT_ID)
+      params.append('client_secret', CLIENT_SECRET)
+      params.append('code', code)
 
-    const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: params
-    })
+      const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: params
+      })
 
-    const { access_token } = await tokenRes.json()
+      const { access_token } = await tokenRes.json()
 
-    const userRes = await fetch('https://api.github.com/user', {
-      headers: { Authorization: `Bearer ${access_token}` }
-    })
-
-    const githubUser = await userRes.json()
-
-    let email = githubUser.email
-
-    if (!email) {
-      const emailRes = await fetch('https://api.github.com/user/emails', {
+      const userRes = await fetch('https://api.github.com/user', {
         headers: { Authorization: `Bearer ${access_token}` }
       })
-      const emails = await emailRes.json()
-      email = emails.find(e => e.primary)?.email
+
+      const githubUser = await userRes.json()
+
+      let email = githubUser.email
+
+      if (!email) {
+        const emailRes = await fetch('https://api.github.com/user/emails', {
+          headers: { Authorization: `Bearer ${access_token}` }
+        })
+        const emails = await emailRes.json()
+        email = emails.find(e => e.primary)?.email
+      }
+
+      const token = await loginOrRegister(email)
+
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/"
+      })
+
+      res.redirect("http://localhost:5173")
+
+    } catch (err) {
+      console.error(err)
+      res.redirect("http://localhost:5173")
     }
-
-    const token = await loginOrRegister(email)
-
-    res.redirect(`http://localhost:5173/oauth-success?token=${token}`)
   }
 
   googleAuth(req, res) {
@@ -66,31 +81,65 @@ export class AuthController {
   }
 
   async googleCallback(req, res) {
-    const { code } = req.query
+    try {
+      const { code } = req.query
+      if (!code) return res.redirect("http://localhost:5173")
 
-    const params = new URLSearchParams()
-    params.append('client_id', GOOGLE_CLIENT_ID)
-    params.append('client_secret', GOOGLE_CLIENT_SECRET)
-    params.append('code', code)
-    params.append('redirect_uri', 'http://localhost:3001/auth/google/callback')
-    params.append('grant_type', 'authorization_code')
+      const params = new URLSearchParams()
+      params.append('client_id', GOOGLE_CLIENT_ID)
+      params.append('client_secret', GOOGLE_CLIENT_SECRET)
+      params.append('code', code)
+      params.append('redirect_uri', 'http://localhost:3001/auth/google/callback')
+      params.append('grant_type', 'authorization_code')
 
-    const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params
-    })
+      const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: params
+      })
 
-    const tokenData = await tokenRes.json()
+      const tokenData = await tokenRes.json()
 
-    const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
-      headers: { Authorization: `Bearer ${tokenData.access_token}` }
-    })
+      const userRes = await fetch('https://www.googleapis.com/oauth2/v2/userinfo', {
+        headers: { Authorization: `Bearer ${tokenData.access_token}` }
+      })
 
-    const googleUser = await userRes.json()
+      const googleUser = await userRes.json()
 
-    const token = await loginOrRegister(googleUser.email)
+      const token = await loginOrRegister(googleUser.email)
 
-    res.redirect(`http://localhost:5173/oauth-success?token=${token}`)
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+        path: "/"
+      })
+
+      res.redirect("http://localhost:5173")
+
+    } catch (err) {
+      console.error(err)
+      res.redirect("http://localhost:5173")
+    }
+  }
+
+  me(req, res) {
+    const token = req.cookies.jwt
+
+    if (!token) {
+      return res.status(401).json({ error: "Not authenticated" })
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      res.json(decoded)
+    } catch {
+      res.status(401).json({ error: "Invalid token" })
+    }
+  }
+
+  logout(req, res) {
+    res.clearCookie("jwt")
+    res.json({ message: "Logged out" })
   }
 }
