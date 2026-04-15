@@ -1,56 +1,19 @@
-import { useState, useEffect } from "react";
+import { useAuth } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
 import AnalyticsView from "./pages/Analytics";
+import Login from "./pages/Login";
+import { useState } from "react";
 
 function App() {
+  const { isAuthenticated, logout } = useAuth();
   const [view, setView] = useState("dashboard");
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-
-  useEffect(() => {
-    fetch("http://localhost:3001/auth/me", {
-      credentials: "include"
-    })
-      .then(res => {
-        if (!res.ok) throw new Error()
-        return res.json()
-      })
-      .then(() => setIsAuthenticated(true))
-      .catch(() => setIsAuthenticated(false));
-  }, []);
-
-  const handleLogout = async () => {
-    await fetch("http://localhost:3001/auth/logout", {
-      method: "POST",
-      credentials: "include"
-    });
-
-    setIsAuthenticated(false);
-  };
 
   if (isAuthenticated === null) {
-    return <div>Laddar...</div>;
+    return <div>Loading...</div>;
   }
 
   if (!isAuthenticated) {
-    return (
-      <div style={{ padding: "2rem" }}>
-        <h2>Du måste logga in</h2>
-
-        <button onClick={() => {
-          window.location.href = "http://localhost:3001/auth/github";
-        }}>
-          Login with GitHub
-        </button>
-
-        <br /><br />
-
-        <button onClick={() => {
-          window.location.href = "http://localhost:3001/auth/google";
-        }}>
-          Login with Google
-        </button>
-      </div>
-    );
+    return <Login />;
   }
 
   return (
@@ -64,8 +27,8 @@ function App() {
           Analytics
         </button>
 
-        <button onClick={handleLogout}>
-          Logga ut
+        <button onClick={logout}>
+          Logout
         </button>
       </div>
 
