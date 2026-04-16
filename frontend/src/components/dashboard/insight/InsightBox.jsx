@@ -7,14 +7,23 @@ export default function InsightBox({ tracks }) {
   const { avgTempo, avgEnergy } = calculateAverages(tracks);
 
   return (
-    <div style={{ margin: "1rem 0" }}>
-      <h3>Insights</h3>
+    <div className="mt-6 p-5 bg-white rounded-2xl shadow-md border border-gray-100">
+      <h3 className="text-lg font-semibold text-gray-800 mb-3">
+        Insights
+      </h3>
 
       <InsightStats avgTempo={avgTempo} avgEnergy={avgEnergy} />
 
-      <p>
-        Songs in your vibe cluster around {avgTempo.toFixed(0)} BPM with{" "}
-        {getEnergyLabel(avgEnergy)} energy.
+      <p className="mt-4 text-sm text-gray-600 leading-relaxed">
+        Songs in your vibe cluster around{" "}
+        <span className="font-semibold text-gray-800">
+          {avgTempo.toFixed(0)} BPM
+        </span>{" "}
+        with{" "}
+        <span className="font-semibold text-green-600">
+          {getEnergyLabel(avgEnergy)}
+        </span>{" "}
+        energy.
       </p>
     </div>
   );
