@@ -13,8 +13,8 @@ import { handleRangeChange, keyOptions } from "./filterUtils";
 
 export default function Filters({ filters, setFilters }) {
   return (
-    <div className="filters-container">
-      <h3>Filters</h3>
+    <div className="flex flex-col gap-6 p-4 bg-white rounded-2xl shadow-md">
+  <h3 className="text-lg font-semibold text-gray-800">Filters</h3>
 
       {rangeFilters.map((f) => (
         <RangeFilter
