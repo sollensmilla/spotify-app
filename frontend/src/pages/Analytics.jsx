@@ -10,13 +10,17 @@ export default function AnalyticsView() {
   useEffect(() => {
     fetchTracks({}).then(setTracks);
   }, []);
-""
+
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>Analytics</h1>
+      <h1 style={{ textAlign: "center", marginBottom: "2rem" }}>
+        Analytics
+      </h1>
 
       <TopLists tracks={tracks} />
-      <GenreChart tracks={tracks} />
+      <div style={{ marginTop: "2rem" }}>
+        <GenreChart tracks={tracks} />
+      </div>
     </div>
   );
 }
