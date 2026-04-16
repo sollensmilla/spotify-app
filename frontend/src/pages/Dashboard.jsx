@@ -24,14 +24,40 @@ export default function Dashboard({ token }) {
   });
 
   const [tracks, setTracks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+    const loadTracks = async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const data = await fetchTracks(filters, token);
+      setTracks(data);
+    } catch (err) {
+      setError("Failed to load tracks");
+      setTracks([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      fetchTracks(filters, token).then(setTracks);
+      loadTracks();
     }, 300);
 
     return () => clearTimeout(timeout);
   }, [filters, token]);
+
+if (loading) {
+  return <div>Loading tracks...</div>;
+}
+
+if (error) {
+  return <div style={{ color: "red" }}>{error}</div>;
+}
 
   return (
     <div style={{ padding: "2rem" }}>

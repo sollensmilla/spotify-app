@@ -35,11 +35,16 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+    try {
     await fetch("http://localhost:3001/auth/logout", {
       method: "POST",
       credentials: "include"
     });
+
     setIsAuthenticated(false);
+     } catch (err) {
+        console.error("Logout failed", err);
+     }
   };
 
   return (

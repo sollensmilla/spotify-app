@@ -1,7 +1,9 @@
 import TrackItem from "./TrackItem";
 
 export default function TrackList({ tracks }) {
-  if (!tracks) return null;
+ if (!tracks || tracks.length === 0) {
+  return <div>No tracks found</div>;
+}
 
   return (
    <div className="rounded-2xl shadow-md border border-gray-100 bg-white h-full flex flex-col">

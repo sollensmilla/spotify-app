@@ -11,15 +11,22 @@ export default function Login() {
   const { loginWithGithub, loginWithGoogle } = useAuth();
   const [loading, setLoading] = useState(null);
   const [visible, setVisible] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => setVisible(true), []);
 
-  const handleLogin = (provider) => {
+const handleLogin = (provider) => {
+  try {
     setLoading(provider);
+    setError(null);
 
     if (provider === "github") loginWithGithub();
     if (provider === "google") loginWithGoogle();
-  };
+  } catch (err) {
+    setError("Login failed");
+    setLoading(null);
+  }
+};
 
   return (
     <div className="h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800">
@@ -47,6 +54,12 @@ export default function Login() {
         >
           Login with Google
         </LoginButton>
+
+          {error && (
+    <p className="text-red-400 mt-4 text-sm text-center">
+      {error}
+    </p>
+  )}
       </LoginCard>
     </div>
   );
