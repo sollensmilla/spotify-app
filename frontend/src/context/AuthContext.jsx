@@ -4,17 +4,26 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [authLoading, setAuthLoading] = useState(true);
+
+    const checkAuth = async () => {
+    try {
+      const res = await fetch("http://localhost:3001/auth/me", {
+        credentials: "include",
+      });
+
+      if (!res.ok) throw new Error();
+
+      setIsAuthenticated(true);
+    } catch {
+      setIsAuthenticated(false);
+    } finally {
+      setAuthLoading(false);
+    }
+  };
 
   useEffect(() => {
-    fetch("http://localhost:3001/auth/me", {
-      credentials: "include"
-    })
-      .then(res => {
-        if (!res.ok) throw new Error();
-        return res.json();
-      })
-      .then(() => setIsAuthenticated(true))
-      .catch(() => setIsAuthenticated(false));
+    checkAuth();
   }, []);
 
   const loginWithGithub = () => {
@@ -36,9 +45,11 @@ export function AuthProvider({ children }) {
   return (
     <AuthContext.Provider value={{
       isAuthenticated,
+      authLoading,
       loginWithGithub,
       loginWithGoogle,
-      logout
+      logout,
+      checkAuth
     }}>
       {children}
     </AuthContext.Provider>

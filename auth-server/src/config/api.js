@@ -1,5 +1,11 @@
 import fetch from 'node-fetch'
+import { config } from 'dotenv'
+
+config()
+
 import { API_URL } from './env.js'
+
+const OAUTH_PASSWORD = process.env.OAUTH_PASSWORD
 
 export const loginOrRegister = async (email) => {
   const loginRes = await fetch(API_URL, {
@@ -15,14 +21,14 @@ export const loginOrRegister = async (email) => {
       `,
       variables: {
         email,
-        password: 'oauth-login'
+        password: OAUTH_PASSWORD
       }
     })
   })
 
   const loginData = await loginRes.json()
 
-  if (!loginData.errors) {
+  if (loginRes.ok && !loginData.errors) {
     return loginData.data.login.token
   }
 
@@ -39,7 +45,7 @@ export const loginOrRegister = async (email) => {
       `,
       variables: {
         email,
-        password: 'oauth-login'
+        password: OAUTH_PASSWORD
       }
     })
   })

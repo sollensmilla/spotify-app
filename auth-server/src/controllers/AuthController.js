@@ -134,12 +134,17 @@ export class AuthController {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       res.json(decoded)
     } catch {
-      res.status(401).json({ error: "Invalid token" })
+      res.status(401).json({ error: "Token expired or invalid" })
     }
   }
 
   logout(req, res) {
-    res.clearCookie("jwt")
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "lax",
+      path: "/",
+    });
+
     res.json({ message: "Logged out" })
   }
 }
