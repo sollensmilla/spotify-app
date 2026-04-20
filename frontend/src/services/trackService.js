@@ -18,6 +18,10 @@ export const fetchTracks = async (filters = {}) => {
           artists {
           artist_name
           }
+          albums {
+          album_name
+          }
+          image_url
         }
       }
     }
@@ -68,6 +72,12 @@ export const fetchAnalytics = async (token) => {
           track_name
           popularity
           image_url
+          artists {
+          artist_name
+          }
+          albums {
+          album_name
+          }
         }
         topArtists {
           artist_name
