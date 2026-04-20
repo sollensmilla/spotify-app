@@ -16,22 +16,16 @@ ChartJS.register(
 );
 
 import { Bar } from "react-chartjs-2";
-import { getGenreCounts } from "./genreChartUtils";
 
-export default function GenreChart({ tracks }) {
-  if (!tracks.length) return null;
-
-  const counts = getGenreCounts(tracks);
-
-  const labels = Object.keys(counts);
-  const dataValues = Object.values(counts);
+export default function GenreChart({ genreCounts, onGenreClick }) {
+  if (!genreCounts?.length) return null;
 
   const data = {
-    labels,
+    labels: genreCounts.map((g) => g.genre),
     datasets: [
       {
         label: "Tracks per genre",
-        data: dataValues,
+        data: genreCounts.map((g) => g.count),
       },
     ],
   };
@@ -39,7 +33,26 @@ export default function GenreChart({ tracks }) {
   return (
     <div style={{ marginTop: "2rem" }}>
       <h3>Genre Distribution</h3>
-      <Bar data={data} />
+
+      <Bar
+        data={data}
+        options={{
+          responsive: true,
+          plugins: {
+            tooltip: {
+              enabled: true,
+            },
+          },
+          onClick: (_, elements) => {
+            if (!elements.length) return;
+
+            const index = elements[0].index;
+            const genre = data.labels[index];
+
+            onGenreClick?.(genre); 
+          },
+        }}
+      />
     </div>
   );
 }

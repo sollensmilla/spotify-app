@@ -1,6 +1,6 @@
 import apiClient from "./apiClient";
 
-export const fetchTracks = async (filters) => {
+export const fetchTracks = async (filters = {}) => {
   const query = `
     query GetTracks($filter: TrackFilterInput, $limit: Int) {
       tracks(filter: $filter, limit: $limit) {
@@ -53,4 +53,37 @@ export const fetchTracks = async (filters) => {
     console.error("Error fetching tracks:", err.response?.data || err);
     return [];
   }
+};
+
+export const fetchAnalytics = async (token) => {
+  const query = `
+    query {
+      analytics {
+        genreCounts {
+          genre
+          count
+        }
+        topTracks {
+          id
+          track_name
+          popularity
+          image_url
+        }
+        topArtists {
+          artist_name
+          count
+        }
+      }
+    }
+  `;
+
+  const res = await apiClient.post(
+    "",
+    { query },
+    {
+      headers: { Authorization: `Bearer ${token}` }
+    }
+  );
+
+  return res.data.data.analytics;
 };
