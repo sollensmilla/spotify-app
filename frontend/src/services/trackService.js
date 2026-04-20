@@ -1,16 +1,17 @@
 /**
  * Track Service: Handles fetching tracks and analytics data from the backend GraphQL API.
  * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
+ * @author Smilla Sollén
  */
 
 import apiClient from "./apiClient";
 
 /**
  * Fetches tracks based on the provided filters.
+ * Used in Dashboard (small dataset for performance).
  * 
- * @param {Object} filters - The filters to apply when fetching tracks.
- * @returns {Promise<Array>} - A promise that resolves to an array of tracks.
+ * @param {Object} filters
+ * @returns {Promise<Array>}
  */
 export const fetchTracks = async (filters = {}) => {
   const query = `
@@ -28,10 +29,10 @@ export const fetchTracks = async (filters = {}) => {
           explicit
           track_genre
           artists {
-          artist_name
+            artist_name
           }
           albums {
-          album_name
+            album_name
           }
           image_url
         }
@@ -71,6 +72,48 @@ export const fetchTracks = async (filters = {}) => {
   }
 };
 
+/**
+ * Fetches a large dataset for analytics.
+ * Used in Analytics page (aggregation + charts).
+ * 
+ * @returns {Promise<Array>}
+ */
+export const fetchAnalyticsTracks = async () => {
+  const query = `
+    query GetTracks($limit: Int) {
+      tracks(limit: $limit) {
+        items {
+          id
+          track_name
+          energy
+          tempo
+          danceability
+          popularity
+        }
+      }
+    }
+  `;
+
+  const variables = {
+    limit: 6000,
+  };
+
+  try {
+    const res = await apiClient.post("", { query, variables });
+    return res.data.data.tracks.items;
+  } catch (err) {
+    console.error("Error fetching analytics tracks:", err);
+    return [];
+  }
+};
+
+/**
+ * Fetches precomputed analytics (top tracks, artists, etc.)
+ * Optional helper for analytics page.
+ * 
+ * @param {string} token
+ * @returns {Promise<Object>}
+ */
 export const fetchAnalytics = async (token) => {
   const query = `
     query {
@@ -85,10 +128,10 @@ export const fetchAnalytics = async (token) => {
           popularity
           image_url
           artists {
-          artist_name
+            artist_name
           }
           albums {
-          album_name
+            album_name
           }
         }
         topArtists {
@@ -99,13 +142,18 @@ export const fetchAnalytics = async (token) => {
     }
   `;
 
-  const res = await apiClient.post(
-    "",
-    { query },
-    {
-      headers: { Authorization: `Bearer ${token}` }
-    }
-  );
+  try {
+    const res = await apiClient.post(
+      "",
+      { query },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
-  return res.data.data.analytics;
+    return res.data.data.analytics;
+  } catch (err) {
+    console.error("Error fetching analytics:", err);
+    return null;
+  }
 };

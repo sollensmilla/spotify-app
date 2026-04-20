@@ -1,87 +1,62 @@
-/**
- * Analytics: A React page using functional components and hooks to fetch and display analytics data related to music tracks.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
 import { useEffect, useState } from "react";
-import { fetchAnalytics, fetchTracks } from "../services/trackService";
-import GenreChart from "../components/analytics/genreChart/GenreChart";
+import { fetchAnalyticsTracks } from "../services/trackService";
+import PopularityChart from "../components/analytics/popularityChart/PopularityChart";
 import TopLists from "../components/analytics/topLists/TopLists";
 
-/**
- * Renders the Analytics page.
- * 
- * @param {{ token: string }} param0 - The props object containing the authentication token.
- * @returns {JSX.Element} - The rendered Analytics component.
- */
-export default function Analytics({ token }) {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [genreTracks, setGenreTracks] = useState([]);
+export default function Analytics() {
+  const [tracks, setTracks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedBucket, setSelectedBucket] = useState(null);
 
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      setError(null);
-
-      try {
-        const res = await fetchAnalytics(token);
-        setData(res);
-      } catch (err) {
-        console.error(err); 
-        setError("Failed to load analytics");
-      } finally {
-        setLoading(false);
-      }
+      const res = await fetchAnalyticsTracks();
+      setTracks(res);
+      setLoading(false);
     };
 
     load();
-  }, [token]);
-
-  useEffect(() => {
-    const loadGenreTracks = async () => {
-      if (!selectedGenre) return;
-
-      const res = await fetchTracks({
-        genre: selectedGenre,
-      });
-
-      setGenreTracks(res);
-    };
-
-    loadGenreTracks();
-  }, [selectedGenre]);
+  }, []);
 
   if (loading) return <div>Loading analytics...</div>;
-  if (error) return <div style={{ color: "red" }}>{error}</div>;
-  if (!data) return null;
+
+  const filteredTracks = selectedBucket
+    ? tracks.filter((t) => {
+        const p = t.popularity;
+
+        if (selectedBucket === "0-20") return p <= 20;
+        if (selectedBucket === "21-40") return p <= 40 && p > 20;
+        if (selectedBucket === "41-60") return p <= 60 && p > 40;
+        if (selectedBucket === "61-80") return p <= 80 && p > 60;
+        if (selectedBucket === "81-100") return p > 80;
+
+        return true;
+      })
+    : tracks;
 
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Analytics</h1>
 
-      <GenreChart
-        genreCounts={data.genreCounts}
-        onGenreClick={setSelectedGenre}
+      <PopularityChart
+        tracks={tracks}
+        onBucketClick={setSelectedBucket}
       />
 
-      <TopLists topTracks={data.topTracks} />
-
-      {selectedGenre && (
+      {selectedBucket && (
         <div style={{ marginTop: "2rem" }}>
-          <h3>Tracks in {selectedGenre}</h3>
+          <h3>Tracks in {selectedBucket}</h3>
 
-          {genreTracks.map((t) => (
+          {filteredTracks.slice(0, 10).map((t) => (
             <div key={t.id}>
-              {t.track_name} ({t.popularity})
+              {t.track_name} — {t.popularity}
             </div>
           ))}
         </div>
       )}
+
+      <TopLists topTracks={tracks} />
     </div>
   );
 }
