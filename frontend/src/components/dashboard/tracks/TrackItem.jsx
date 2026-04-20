@@ -1,5 +1,16 @@
+/**
+ * TrackItem: A React component that renders a table row displaying information about a single track, including its name, artists, genre, energy, danceability, tempo, key, popularity, acousticness, and whether it is explicit.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import { formatKey } from "./trackUtils";
 
+/**
+ * Renders a table row displaying information about a single track.
+ * @param {{ track: Object }} param0 - The props object containing the track data.
+ * @returns {JSX.Element} - The rendered TrackItem component.
+ */
 export default function TrackItem({ track }) {
   if (!track) return null;
 

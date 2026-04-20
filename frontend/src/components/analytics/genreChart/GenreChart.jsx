@@ -1,3 +1,9 @@
+/**
+ * GenreChart: A React component that renders a bar chart showing the distribution of tracks across different genres using Chart.js.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -17,6 +23,11 @@ ChartJS.register(
 
 import { Bar } from "react-chartjs-2";
 
+/**
+ * Renders a bar chart showing the distribution of tracks across different genres.
+ * @param {{ genreCounts: Array, onGenreClick: Function }} param0 - The props object containing genre counts and a click handler.
+ * @returns {JSX.Element|null} - The rendered GenreChart component or null if no genre counts are provided.
+ */
 export default function GenreChart({ genreCounts, onGenreClick }) {
   if (!genreCounts?.length) return null;
 

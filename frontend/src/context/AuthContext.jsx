@@ -1,7 +1,19 @@
+/**
+ * AuthContext: A React context that provides authentication state and functions for managing user authentication in the application. It includes functions for logging in with GitHub or Google, logging out, and checking the current authentication status. 
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
 
+/**
+ * AuthProvider: A React component that provides authentication state and functions to its child components.
+ * 
+ * @param {*} param0 
+ * @returns {JSX.Element} - The rendered AuthProvider component.
+ */
 export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);

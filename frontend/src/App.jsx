@@ -1,3 +1,9 @@
+/**
+ * App: The main component of the application that serves as the entry point for rendering the user interface.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 

@@ -1,3 +1,9 @@
+/**
+ * Dashboard: A React page that serves as the main interface for users to explore and filter music tracks based on various attributes. It fetches track data from the backend based on the applied filters and handles loading and error states accordingly.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import { useState, useEffect } from "react";
 import { fetchTracks } from "../services/trackService";
 import Filters from "../components/dashboard/filters/Filters";
@@ -5,6 +11,11 @@ import TrackList from "../components/dashboard/tracks/TrackList";
 import InsightBox from "../components/dashboard/insight/InsightBox";
 import ChartView from "../components/dashboard/charts/ChartView";
 
+/**
+ * Renders the Dashboard page.
+ * @param {{ token: string }} param0 - The props object containing the authentication token.
+ * @returns {JSX.Element} - The rendered Dashboard component.
+ */
 export default function Dashboard({ token }) {
   const [filters, setFilters] = useState({
     energyMin: 0,

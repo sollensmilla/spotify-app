@@ -1,3 +1,9 @@
+/**
+ * FilterConfig: Defines the configuration for range, select, and text filters used in the dashboard, including labels, keys, options, and styling information.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 export const rangeFilters = [
   {
     label: "Energy",

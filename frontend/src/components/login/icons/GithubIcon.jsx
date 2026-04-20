@@ -1,3 +1,13 @@
+/**
+ * GithubIcon: A React component that renders the GitHub logo as an SVG icon.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+/**
+ * Renders the GitHub logo as an SVG icon.
+ * @returns {JSX.Element} - The rendered GitHub icon.
+ */
 export default function GithubIcon() {
 return (
     <svg

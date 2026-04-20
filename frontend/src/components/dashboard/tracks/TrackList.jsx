@@ -1,5 +1,16 @@
+/**
+ * TrackList: A React component that renders a list of tracks in a table format. It displays the track's title, genre, energy, danceability, tempo, key, popularity, acousticness, and explicit content status. The component handles cases where no tracks are found and uses the TrackItem component to render each individual track's information in a table row.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import TrackItem from "./TrackItem";
 
+/**
+ * Renders a list of tracks in a table format.
+ * @param {{ tracks: Array }} param0 - The props object containing the list of tracks.
+ * @returns {JSX.Element} - The rendered TrackList component.
+ */
 export default function TrackList({ tracks }) {
  if (!tracks || tracks.length === 0) {
   return <div>No tracks found</div>;

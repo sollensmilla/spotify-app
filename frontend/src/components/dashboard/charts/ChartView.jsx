@@ -1,3 +1,9 @@
+/**
+ * ChartView: A React component that renders a scatter chart visualizing the relationship between tempo and energy of tracks, along with a legend to indicate energy levels and an average point.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import {
   Chart as ChartJS,
   LinearScale,
@@ -12,6 +18,11 @@ import LegendItem from "./LegendItem";
 
 ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
+/**
+ * Renders a scatter chart visualizing the relationship between tempo and energy of tracks.
+ * @param {{ tracks: Array }} param0 - The props object containing the list of tracks.
+ * @returns {JSX.Element|null} - The rendered ChartView component or null if no tracks are provided.
+ */
 export default function ChartView({ tracks }) {
   if (!tracks.length) return null;
 

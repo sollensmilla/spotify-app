@@ -1,8 +1,20 @@
+/**
+ * Analytics: A React page using functional components and hooks to fetch and display analytics data related to music tracks.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import { useEffect, useState } from "react";
 import { fetchAnalytics, fetchTracks } from "../services/trackService";
 import GenreChart from "../components/analytics/genreChart/GenreChart";
 import TopLists from "../components/analytics/topLists/TopLists";
 
+/**
+ * Renders the Analytics page.
+ * 
+ * @param {{ token: string }} param0 - The props object containing the authentication token.
+ * @returns {JSX.Element} - The rendered Analytics component.
+ */
 export default function Analytics({ token }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);

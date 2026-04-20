@@ -1,3 +1,9 @@
+/**
+ * Auth Controller: Handles authentication logic for GitHub and Google OAuth, as well as user session management.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import fetch from 'node-fetch'
 import {
   CLIENT_ID,
@@ -8,13 +14,29 @@ import {
 import { loginOrRegister } from '../config/api.js'
 import jwt from 'jsonwebtoken'
 
+/**
+ * AuthController: A class that defines methods for handling authentication routes and logic.
+ */
 export class AuthController {
-
+  /**
+   * Handles the GitHub OAuth authentication request.
+   * 
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Promise<void>} - A promise that resolves when the authentication request is handled.
+   */
   githubAuth(req, res) {
     const url = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=user:email`
     res.redirect(url)
   }
 
+  /**
+   * Handles the GitHub OAuth callback.
+   * 
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Promise<void>} - A promise that resolves when the callback is handled.
+   */
   async githubCallback(req, res) {
     try {
       const { code } = req.query
@@ -69,6 +91,13 @@ export class AuthController {
     }
   }
 
+  /**
+   * Handles the Google OAuth authentication request.
+   * 
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Promise<void>} - A promise that resolves when the authentication request is handled.
+   */
   googleAuth(req, res) {
     const url =
       `https://accounts.google.com/o/oauth2/v2/auth?` +
@@ -80,6 +109,12 @@ export class AuthController {
     res.redirect(url)
   }
 
+  /**
+   * Handles the Google OAuth callback.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Promise<void>} - A promise that resolves when the callback is handled.
+   */
   async googleCallback(req, res) {
     try {
       const { code } = req.query
@@ -123,6 +158,12 @@ export class AuthController {
     }
   }
 
+  /**
+   * Retrieves the authenticated user's information.
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   * @returns {Promise<void>} - A promise that resolves when the request is handled.
+   */
   me(req, res) {
     const token = req.cookies.jwt
 
@@ -138,6 +179,12 @@ export class AuthController {
     }
   }
 
+  /**
+   * Logs out the user by clearing the authentication cookie.
+   * 
+   * @param {Object} req - The request object.
+   * @param {Object} res - The response object.
+   */
   logout(req, res) {
     res.clearCookie("jwt", {
       httpOnly: true,

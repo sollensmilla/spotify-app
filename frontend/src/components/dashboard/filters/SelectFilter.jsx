@@ -1,3 +1,14 @@
+/**
+ * SelectFilter: A React component that renders a dropdown select filter for filtering tracks based on a specific attribute (e.g., key, mode). The component displays a label and a select input with options defined in the props. It allows users to select a specific value or choose "All" to include all values.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+/**
+ * Renders a dropdown select filter for filtering tracks based on a specific attribute.
+ * @param {{ label: String, value: String, options: Array, onChange: Function }} param0 - The props object containing the label, current value, options, and change handler.
+ * @returns {JSX.Element} - The rendered SelectFilter component.
+ */
 export default function SelectFilter({ label, value, options, onChange }) {
   return (
     <div className="flex flex-col gap-1">

@@ -1,5 +1,17 @@
+/**
+ * Track Service: Handles fetching tracks and analytics data from the backend GraphQL API.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import apiClient from "./apiClient";
 
+/**
+ * Fetches tracks based on the provided filters.
+ * 
+ * @param {Object} filters - The filters to apply when fetching tracks.
+ * @returns {Promise<Array>} - A promise that resolves to an array of tracks.
+ */
 export const fetchTracks = async (filters = {}) => {
   const query = `
     query GetTracks($filter: TrackFilterInput, $limit: Int) {

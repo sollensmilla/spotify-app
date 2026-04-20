@@ -1,3 +1,14 @@
+/**
+ * InsightStats: A React component that displays the average tempo and energy of a collection of tracks. It receives the average tempo and energy as props and renders them in a styled format, showing the tempo in beats per minute (BPM) and the energy as a decimal value. 
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+/**
+ * Renders the average tempo and energy of a collection of tracks.
+ * @param {{ avgTempo: Number, avgEnergy: Number }} param0 - The props object containing the average tempo and energy.
+ * @returns {JSX.Element} - The rendered InsightStats component.
+ */
 export default function InsightStats({ avgTempo, avgEnergy }) {
   return (
     <div className="grid grid-cols-2 gap-4">

@@ -1,3 +1,12 @@
+/**
+ * trackUtils: A utility module that provides functions for formatting track attributes, specifically the musical key. It includes a mapping of key values to their corresponding musical notes and a function to format the key value for display purposes.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+/**
+ * A mapping of key values to their corresponding musical notes, including a special case for unknown keys.
+ */
 export const keyMap = {
     "-1": "Unknown",
     0: "C",
@@ -14,4 +23,9 @@ export const keyMap = {
     11: "B",
 };
 
+/**
+ * Formats the musical key for display purposes.
+ * @param {Number} key - The key value.
+ * @returns {String} - The formatted key name.
+ */
 export const formatKey = (key) => keyMap[key] || "Unknown";

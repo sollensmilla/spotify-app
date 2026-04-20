@@ -1,3 +1,15 @@
+/**
+ * LoginCard: A React component that renders a styled card for the login page. It accepts a `visible` prop to control its visibility and applies transition effects for smooth appearance and disappearance.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+
+/**
+ * Renders a styled card for the login page.
+ * @param {*} param0 - The props object containing the card configuration.
+ * @returns {JSX.Element} - The rendered login card.
+ */
 export default function LoginCard({ visible, children }) {
   return (
     <div

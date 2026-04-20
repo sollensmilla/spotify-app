@@ -1,3 +1,13 @@
+/**
+ * GoogleIcon: A React component that renders the Google logo as an SVG icon.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+/**
+ * Renders the Google logo as an SVG icon.
+ * @returns {JSX.Element} - The rendered Google icon.
+ */
 export default function GoogleIcon() {
   return (
     <svg className="w-5 h-5" viewBox="0 0 48 48">

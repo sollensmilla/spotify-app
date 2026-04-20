@@ -1,3 +1,9 @@
+/**
+ * Environment Variables: Loads and exports environment variables from the .env file for use in the authentication server.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import dotenv from 'dotenv'
 dotenv.config()
 

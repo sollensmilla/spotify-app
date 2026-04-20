@@ -1,3 +1,9 @@
+/**
+ * Login: A React page that provides a user interface for logging in to the application using GitHub or Google authentication. It utilizes the AuthContext to manage authentication state and handles loading and error states during the login process.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect } from "react";
 
@@ -7,6 +13,11 @@ import Spinner from "../components/login/Spinner";
 import GithubIcon from "../components/login/icons/GithubIcon";
 import GoogleIcon from "../components/login/icons/GoogleIcon";
 
+/**
+ * Renders the Login page.
+ * 
+ * @returns {JSX.Element} - The rendered Login component.
+ */
 export default function Login() {
   const { loginWithGithub, loginWithGoogle } = useAuth();
   const [loading, setLoading] = useState(null);

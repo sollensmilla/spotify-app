@@ -1,3 +1,12 @@
+/**
+ * filterUtils: Utility functions and constants for managing filters in the dashboard, including key options for musical keys and a function to handle changes in range filters.
+ * 
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
+/**
+ * An array of options for musical keys, used in select filters to allow users to filter tracks by key.
+ */
 export const keyOptions = [
     { value: -1, label: "Unknown" },
     { value: 0, label: "C" },
@@ -14,6 +23,13 @@ export const keyOptions = [
     { value: 11, label: "B" },
 ];
 
+/**
+ * Handles changes to range filters, updating the filter values in the state.
+ * @param {*} setFilters
+ * @param {*} minKey
+ * @param {*} maxKey
+ * @param {*} value   
+ */
 export const handleRangeChange = (setFilters, minKey, maxKey, value) => {
     setFilters((prev) => ({
         ...prev,
