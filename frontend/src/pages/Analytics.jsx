@@ -17,19 +17,14 @@ import { fetchAnalyticsTracks } from "../services/trackService";
 import PopularityChart from "../components/analytics/popularityChart/PopularityChart";
 import TopLists from "../components/analytics/topLists/TopLists";
 
-/**
- * Renders the Analytics page.
- * 
- * @returns {JSX.Element}
- */
 export default function Analytics() {
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBucket, setSelectedBucket] = useState(null);
 
-  /**
-   * Fetch analytics dataset on mount.
-   */
+  const [page, setPage] = useState(1);
+  const pageSize = 10;
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
@@ -50,9 +45,6 @@ export default function Analytics() {
 
   if (loading) return <div>Loading analytics...</div>;
 
-  /**
-   * Filters tracks based on selected popularity bucket.
-   */
   const filteredTracks = selectedBucket
     ? tracks.filter((t) => {
         const p = t.popularity;
@@ -67,6 +59,18 @@ export default function Analytics() {
       })
     : [];
 
+  const totalPages = Math.ceil(filteredTracks.length / pageSize);
+
+  const paginatedTracks = filteredTracks.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  );
+
+  const handleBucketClick = (bucket) => {
+    setSelectedBucket(bucket);
+    setPage(1);
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Analytics</h1>
@@ -77,7 +81,7 @@ export default function Analytics() {
 
       <PopularityChart
         tracks={tracks}
-        onBucketClick={setSelectedBucket}
+        onBucketClick={handleBucketClick}
       />
 
       {selectedBucket && (
@@ -102,11 +106,33 @@ export default function Analytics() {
           {filteredTracks.length === 0 ? (
             <p>No tracks found.</p>
           ) : (
-            filteredTracks.slice(0, 10).map((t) => (
-              <div key={t.id}>
-                {t.track_name} — {t.popularity}
+            <>
+              {paginatedTracks.map((t) => (
+                <div key={t.id}>
+                  {t.track_name} — {t.popularity}
+                </div>
+              ))}
+
+              <div style={{ marginTop: "1rem" }}>
+                <button
+                  disabled={page === 1}
+                  onClick={() => setPage((p) => p - 1)}
+                >
+                  Prev
+                </button>
+
+                <span style={{ margin: "0 10px" }}>
+                  Page {page} / {totalPages}
+                </span>
+
+                <button
+                  disabled={page === totalPages}
+                  onClick={() => setPage((p) => p + 1)}
+                >
+                  Next
+                </button>
               </div>
-            ))
+            </>
           )}
         </div>
       )}

@@ -80,11 +80,11 @@ export default function PopularityChart({ tracks, onBucketClick }) {
   const options = {
     responsive: true,
 
-    onHover: (event, elements) => {
-      event.native.target.style.cursor = elements.length
-        ? "pointer"
-        : "default";
-    },
+onHover: (event, elements) => {
+  const target = event?.native?.target;
+  if (!target) return;
+  target.style.cursor = elements.length ? "pointer" : "default";
+},
 
     plugins: {
       tooltip: {
