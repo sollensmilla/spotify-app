@@ -1,19 +1,48 @@
+/**
+ * Analytics: A React page that fetches a large dataset of tracks
+ * and visualizes aggregated insights using charts.
+ * 
+ * Features:
+ * - Fetches a large dataset for analytics (aggregation-friendly)
+ * - Displays an interactive chart grouped by popularity
+ * - Supports drill-down by clicking chart buckets
+ * - Shows a filtered subset of tracks for deeper inspection
+ * - Displays a top list of popular tracks
+ * 
+ * @author Smilla Sollén
+ */
+
 import { useEffect, useState } from "react";
 import { fetchAnalyticsTracks } from "../services/trackService";
 import PopularityChart from "../components/analytics/popularityChart/PopularityChart";
 import TopLists from "../components/analytics/topLists/TopLists";
 
+/**
+ * Renders the Analytics page.
+ * 
+ * @returns {JSX.Element}
+ */
 export default function Analytics() {
   const [tracks, setTracks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBucket, setSelectedBucket] = useState(null);
 
+  /**
+   * Fetch analytics dataset on mount.
+   */
   useEffect(() => {
     const load = async () => {
       setLoading(true);
-      const res = await fetchAnalyticsTracks();
-      setTracks(res);
-      setLoading(false);
+
+      try {
+        const res = await fetchAnalyticsTracks();
+        setTracks(res);
+      } catch (err) {
+        console.error("Failed to load analytics tracks:", err);
+        setTracks([]);
+      } finally {
+        setLoading(false);
+      }
     };
 
     load();
@@ -21,6 +50,9 @@ export default function Analytics() {
 
   if (loading) return <div>Loading analytics...</div>;
 
+  /**
+   * Filters tracks based on selected popularity bucket.
+   */
   const filteredTracks = selectedBucket
     ? tracks.filter((t) => {
         const p = t.popularity;
@@ -33,11 +65,15 @@ export default function Analytics() {
 
         return true;
       })
-    : tracks;
+    : [];
 
   return (
     <div style={{ padding: "2rem" }}>
       <h1>Analytics</h1>
+
+      <p style={{ color: "#666", marginBottom: "1rem" }}>
+        Explore how audio features change with popularity.
+      </p>
 
       <PopularityChart
         tracks={tracks}
@@ -46,13 +82,32 @@ export default function Analytics() {
 
       {selectedBucket && (
         <div style={{ marginTop: "2rem" }}>
-          <h3>Tracks in {selectedBucket}</h3>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <h3>Tracks in {selectedBucket}</h3>
 
-          {filteredTracks.slice(0, 10).map((t) => (
-            <div key={t.id}>
-              {t.track_name} — {t.popularity}
-            </div>
-          ))}
+            <button
+              onClick={() => setSelectedBucket(null)}
+              style={{
+                border: "none",
+                background: "#eee",
+                padding: "6px 10px",
+                borderRadius: "6px",
+                cursor: "pointer",
+              }}
+            >
+              Clear
+            </button>
+          </div>
+
+          {filteredTracks.length === 0 ? (
+            <p>No tracks found.</p>
+          ) : (
+            filteredTracks.slice(0, 10).map((t) => (
+              <div key={t.id}>
+                {t.track_name} — {t.popularity}
+              </div>
+            ))
+          )}
         </div>
       )}
 

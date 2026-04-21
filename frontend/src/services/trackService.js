@@ -89,6 +89,8 @@ export const fetchAnalyticsTracks = async () => {
           tempo
           danceability
           popularity
+          acousticness
+          instrumentalness
         }
       }
     }

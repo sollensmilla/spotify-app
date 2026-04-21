@@ -4,6 +4,7 @@
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */
 
+import { useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,14 +16,19 @@ import { Bar } from "react-chartjs-2";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 
-/**
- * Renders a bar chart visualizing the average danceability and energy of tracks grouped by popularity buckets.
- * 
- * @param {*} param0 - The props object containing the list of tracks and a callback function for bucket clicks.
- * @returns {JSX.Element|null} - The rendered PopularityChart component or null if no tracks are provided.
- */
 export default function PopularityChart({ tracks, onBucketClick }) {
   if (!tracks?.length) return null;
+
+  // 🔥 1. STATE (vilken metric som visas)
+  const [metric, setMetric] = useState("danceability");
+
+  const metricOptions = [
+    { key: "danceability", label: "Danceability" },
+    { key: "energy", label: "Energy" },
+    { key: "tempo", label: "Tempo(  BPM )" },
+    { key: "acousticness", label: "Acousticness" },
+    { key: "instrumentalness", label: "Instrumentalness" },
+  ];
 
   const buckets = {
     "0-20": [],
@@ -43,68 +49,42 @@ export default function PopularityChart({ tracks, onBucketClick }) {
 
   const labels = Object.keys(buckets);
 
-  const avgDanceability = labels.map((key) => {
+  const avgValues = labels.map((key) => {
     const arr = buckets[key];
     if (!arr.length) return 0;
 
-    return (
-      arr.reduce((sum, t) => sum + t.danceability, 0) / arr.length
-    );
+    return arr.reduce((sum, t) => sum + (t[metric] || 0), 0) / arr.length;
   });
 
-  const avgEnergy = labels.map((key) => {
-  const arr = buckets[key];
-  if (!arr.length) return 0;
-
-  return (
-    arr.reduce((sum, t) => sum + t.energy, 0) / arr.length
-  );
-});
-
-const data = {
-  labels,
-  datasets: [
-    {
-      label: "Avg Danceability",
-      data: avgDanceability,
-      backgroundColor: labels.map((_, i) => {
-        const colors = [
-          "#4c78a8",
-          "#72b7b2",
-          "#f58518",
-          "#e45756",
-          "#54a24b",
-        ];
-        return colors[i];
-      }),
-      borderRadius: 8,
-    },
-    {
-      label: "Avg Energy",
-      data: avgEnergy,
-      backgroundColor: labels.map((_, i) => {
-        const colors = [
-          "#a0c4ff",
-          "#bdb2ff",
-          "#ffc6ff",
-          "#ffadad",
-          "#caffbf",
-        ];
-        return colors[i];
-      }),
-      borderRadius: 8,
-    },
-  ],
-};
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: `Avg ${metric}`,
+        data: avgValues,
+        backgroundColor: labels.map((_, i) => {
+          const colors = [
+            "#4c78a8",
+            "#72b7b2",
+            "#f58518",
+            "#e45756",
+            "#54a24b",
+          ];
+          return colors[i];
+        }),
+        borderRadius: 8,
+      },
+    ],
+  };
 
   const options = {
     responsive: true,
 
-      onHover: (event, elements) => {
-    event.native.target.style.cursor = elements.length
-      ? "pointer"
-      : "default";
-  },
+    onHover: (event, elements) => {
+      event.native.target.style.cursor = elements.length
+        ? "pointer"
+        : "default";
+    },
 
     plugins: {
       tooltip: {
@@ -116,7 +96,7 @@ const data = {
             const count = buckets[key].length;
             const value = context.raw.toFixed(2);
 
-            return `Avg: ${value} (${count} tracks) → click to drill down`;
+            return `Avg: ${value} (${count} tracks) → click to explore`;
           },
         },
       },
@@ -134,7 +114,28 @@ const data = {
 
   return (
     <div style={{ marginTop: "2rem" }}>
-<h3>Danceability by Popularity (click a bar to explore)</h3>
+      <h3>Popularity Insights (click a bar to explore)</h3>
+
+      <div style={{ marginBottom: "1rem" }}>
+        {metricOptions.map((m) => (
+          <button
+            key={m.key}
+            onClick={() => setMetric(m.key)}
+            style={{
+              marginRight: "8px",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              background: metric === m.key ? "#1db954" : "#ddd",
+              color: metric === m.key ? "white" : "black",
+            }}
+          >
+            {m.label}
+          </button>
+        ))}
+      </div>
+
       <Bar data={data} options={options} />
     </div>
   );
