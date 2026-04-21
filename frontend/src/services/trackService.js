@@ -26,6 +26,7 @@ export const fetchTracks = async (filters = {}) => {
           key
           popularity
           acousticness
+          instrumentalness
           explicit
           track_genre
           artists {
@@ -53,6 +54,8 @@ export const fetchTracks = async (filters = {}) => {
       maxPopularity: filters.popularityMax,
       minAcousticness: filters.acousticnessMin,
       maxAcousticness: filters.acousticnessMax,
+      minInstrumentalness: filters.minInstrumentalness,
+      maxInstrumentalness: filters.maxInstrumentalness,
 
       ...(filters.explicit !== null && { explicit: filters.explicit }),
       ...(filters.genre && { genre: filters.genre }),
@@ -65,6 +68,15 @@ export const fetchTracks = async (filters = {}) => {
 
   try {
     const res = await apiClient.post("", { query, variables });
+    // 👇 LÄGG TILL DENNA
+    console.log("FULL RESPONSE:", res.data);
+
+    // 👇 LÄGG TILL DENNA
+    if (res.data.errors) {
+      console.error("GRAPHQL ERRORS:", res.data.errors);
+      return [];
+    }
+
     return res.data.data.tracks.items;
   } catch (err) {
     console.error("Error fetching tracks:", err.response?.data || err);
@@ -90,14 +102,20 @@ export const fetchAnalyticsTracks = async () => {
           danceability
           popularity
           acousticness
-          instrumentalness
+          instrumentalness,
+          artists {
+            artist_name
+          }
+          albums {
+            album_name
+          }
         }
       }
     }
   `;
 
   const variables = {
-    limit: 6000,
+    limit: 200000,
   };
 
   try {

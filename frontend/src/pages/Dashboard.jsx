@@ -28,6 +28,8 @@ export default function Dashboard({ token }) {
     popularityMax: 100,
     acousticnessMin: 0,
     acousticnessMax: 1,
+    minInstrumentalness: 0,
+    maxInstrumentalness: 1,
     explicit: null,
     genre: "",
     name: "",

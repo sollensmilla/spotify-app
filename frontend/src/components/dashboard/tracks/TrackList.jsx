@@ -40,6 +40,7 @@ export default function TrackList({ tracks }) {
                 <th className="px-4 py-3">Key</th>
                 <th className="px-4 py-3">Pop</th>
                 <th className="px-4 py-3">Acoustic</th>
+                <th className="px-4 py-3">Instrumental</th>
                 <th className="px-4 py-3">Explicit</th>
               </tr>
             </thead>

@@ -32,6 +32,7 @@ const artistNames = track.artists
       <td className="px-4 py-3">{formatKey(track.key)}</td>
       <td className="px-4 py-3">{track.popularity}</td>
       <td className="px-4 py-3">{track.acousticness.toFixed(2)}</td>
+      <td className="px-4 py-3">{track.instrumentalness.toFixed(2)}</td>
       <td className="px-4 py-3">
         {track.explicit ? "Yes" : "No"}
       </td>

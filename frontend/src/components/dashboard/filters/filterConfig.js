@@ -48,6 +48,15 @@ export const rangeFilters = [
     max: 1,
     step: 0.01,
   },
+  {
+    label: "Instrumentalness",
+    color: "linear-gradient(90deg, #f58518, #e45756)",
+    minKey: "minInstrumentalness",
+    maxKey: "maxInstrumentalness",
+    min: 0,
+    max: 1,
+    step: 0.01,
+  }
 ];
 
 export const selectFilters = [
