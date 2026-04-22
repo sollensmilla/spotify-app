@@ -26,9 +26,9 @@ export default function TrackList({ tracks }) {
       </div>
 
       <div className="overflow-x-auto">
-        <div className="max-h-[850px] overflow-y-auto">
+        <div className="max-h-[950px] overflow-y-auto">
 
-          <table className="min-w-[900px] w-full text-sm text-left">
+          <table className="min-w-[950px] w-full text-sm text-left">
             
             <thead className="bg-gray-50 sticky top-0 z-10">
               <tr className="text-xs uppercase text-gray-500 tracking-wide">
