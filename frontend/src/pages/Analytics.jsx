@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { fetchAnalytics } from "../services/trackService";
 import PopularityChart from "../components/analytics/popularityChart/PopularityChart";
 import TopLists from "../components/analytics/topLists/TopLists";
-import Pagination from "../components/analytics/popularityChart/Pagination";
+import Pagination from "../components/pagination/Pagination";
 import { useBucketTracks } from "../hooks/useBucketTracks";
 
 /**

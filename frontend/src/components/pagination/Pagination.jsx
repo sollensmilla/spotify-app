@@ -1,5 +1,5 @@
 /**
- * Component for rendering pagination controls in the popularity chart section of the analytics page.
+ * Component for rendering pagination controls.
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */
 

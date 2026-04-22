@@ -5,19 +5,20 @@
  */
 
 import TrackItem from "./TrackItem";
+import Pagination from "../../pagination/Pagination";
 
 /**
  * Renders a list of tracks in a table format.
- * @param {{ tracks: Array }} param0 - The props object containing the list of tracks.
+ * @param {{ tracks: Array, page: number, totalPages: number, onPageChange: Function }} param0 - The props object containing the list of tracks and pagination information.
  * @returns {JSX.Element} - The rendered TrackList component.
  */
-export default function TrackList({ tracks }) {
- if (!tracks || tracks.length === 0) {
-  return <div>No tracks found</div>;
-}
+export default function TrackList({ tracks, page, totalPages, onPageChange }) {
+  if (!tracks || tracks.length === 0) {
+    return <div>No tracks found</div>;
+  }
 
   return (
-   <div className="rounded-2xl shadow-md border border-gray-100 bg-white h-full flex flex-col">
+    <div className="rounded-2xl shadow-md border border-gray-100 bg-white h-full flex flex-col">
       
       <div className="p-4 border-b">
         <h3 className="text-lg font-semibold text-gray-800">
@@ -27,9 +28,7 @@ export default function TrackList({ tracks }) {
 
       <div className="overflow-x-auto">
         <div className="max-h-[950px] overflow-y-auto">
-
           <table className="min-w-[950px] w-full text-sm text-left">
-            
             <thead className="bg-gray-50 sticky top-0 z-10">
               <tr className="text-xs uppercase text-gray-500 tracking-wide">
                 <th className="px-4 py-3">Title</th>
@@ -50,9 +49,16 @@ export default function TrackList({ tracks }) {
                 <TrackItem key={track.id} track={track} />
               ))}
             </tbody>
-
           </table>
         </div>
+      </div>
+
+      <div className="p-4 border-t flex justify-center">
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       </div>
     </div>
   );

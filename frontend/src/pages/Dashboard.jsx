@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect } from "react";
-import { fetchTracks } from "../services/trackService";
+import { fetchTracksPage } from "../services/trackService";
 import Filters from "../components/dashboard/filters/Filters";
 import TrackList from "../components/dashboard/tracks/TrackList";
 import InsightBox from "../components/dashboard/insight/InsightBox";
@@ -37,16 +37,27 @@ export default function Dashboard({ token }) {
   });
 
   const [tracks, setTracks] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+
+  const limit = 25;
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-    const loadTracks = async () => {
+  const loadTracks = async () => {
     setLoading(true);
     setError(null);
 
     try {
-      const data = await fetchTracks(filters, token);
-      setTracks(data);
+      const data = await fetchTracksPage(
+        filters,
+        limit,
+        (page - 1) * limit
+      );
+
+      setTracks(data.items);
+      setTotal(data.total);
     } catch (err) {
       setError("Failed to load tracks");
       setTracks([]);
@@ -55,51 +66,46 @@ export default function Dashboard({ token }) {
     }
   };
 
-
+  // debounce filters
   useEffect(() => {
     const timeout = setTimeout(() => {
       loadTracks();
     }, 300);
 
     return () => clearTimeout(timeout);
-  }, [filters, token]);
+  }, [filters, page, token]);
 
-if (loading) {
-  return <div>Loading tracks...</div>;
-}
+  // reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [filters]);
 
-if (error) {
-  return <div style={{ color: "red" }}>{error}</div>;
-}
+  if (loading) return <div>Loading tracks...</div>;
+  if (error) return <div style={{ color: "red" }}>{error}</div>;
+
+  const totalPages = Math.ceil(total / limit);
 
   return (
     <div style={{ padding: "2rem" }}>
-      
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         
         <h1 style={{ textAlign: "center", marginBottom: "2rem" }}>
           Find your vibe
         </h1>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "2rem",
-            alignItems: "stretch"
-          }}
-        >
-            <div style={{ flex: 1, display: "flex" }}>
-    <div style={{ flex: 1 }}>
-      <Filters filters={filters} setFilters={setFilters} />
-    </div>
-  </div>
+        <div style={{ display: "flex", gap: "2rem" }}>
+          <Filters filters={filters} setFilters={setFilters} />
 
-  <div style={{ flex: 2, display: "flex" }}>
-    <div style={{ flex: 1, maxWidth: "800px" }}>
-      <TrackList tracks={tracks} />
-    </div>
-  </div>
-</div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <TrackList
+  tracks={tracks}
+  page={page}
+  totalPages={totalPages}
+  onPageChange={setPage}
+/>
+
+          </div>
+        </div>
 
         <div style={{ marginTop: "2rem" }}>
           <InsightBox tracks={tracks} />
@@ -108,7 +114,6 @@ if (error) {
         <div style={{ marginTop: "2rem" }}>
           <ChartView tracks={tracks} />
         </div>
-
       </div>
     </div>
   );
