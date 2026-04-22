@@ -1,5 +1,5 @@
 /**
- * PopularityChart: Main component for the popularity insights section. It manages the selected metric state, processes the tracks into buckets, and renders the MetricSelector and PopularityBarChart components.
+ * PopularityChart: Main component for the popularity insights section.
  * 
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */
@@ -7,28 +7,34 @@
 import { useState } from "react";
 import MetricSelector from "./MetricSelector";
 import PopularityBarChart from "./PopularityBarChart";
-import {
-  createBuckets,
-  calculateAverages,
-} from "./popularityUtils";
 
 /**
- * Main component for the popularity insights section.
+ * Renders the main popularity insights section, allowing users to select an audio feature and view its average values across popularity buckets in a bar chart.
  * 
- * @param {{ tracks: Object[], onBucketClick: Function }} param0 - The props object containing the list of tracks and a function to call when a bucket is clicked.
+ * @param {{ buckets: any[], onBucketClick: Function }} param0 - The props for the component, including popularity buckets and a click handler for when a bucket is clicked.
  * @returns {JSX.Element} - The rendered PopularityChart component.
  */
-export default function PopularityChart({ tracks, onBucketClick }) {
-  const [metric, setMetric] = useState("danceability");
+export default function PopularityChart({ buckets, onBucketClick }) {
+  const [metric, setMetric] = useState("avg_danceability");
 
-  if (!tracks?.length) return null;
+  const metricLabels = {
+    avg_danceability: "Danceability",
+    avg_energy: "Energy",
+    avg_tempo: "Tempo",
+    avg_acousticness: "Acousticness",
+    avg_instrumentalness: "Instrumentalness",
+  };
 
-  const buckets = createBuckets(tracks);
-  const { labels, values } = calculateAverages(buckets, metric);
+  if (!buckets?.length) return null;
+
+  const labels = buckets.map((b) => b.bucket);
+  const values = buckets.map((b) => b[metric] || 0);
 
   return (
     <div style={{ marginTop: "2rem" }}>
-      <h3>Popularity Insights (click a bar to explore)</h3>
+      <h3>
+        Popularity Insights – Avg {metricLabels[metric]}
+      </h3>
 
       <MetricSelector metric={metric} setMetric={setMetric} />
 

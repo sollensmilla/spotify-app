@@ -7,16 +7,16 @@
 /**
  * MetricSelector: A component for selecting which audio feature to display in the popularity chart.
  * 
- * @param {{ metric: string, setMetric: Function }} param0 - The props object containing the currently selected metric and a function to update it.
- * @returns {JSX.Element} - The rendered MetricSelector component.
+ * @param {{ metric: string, setMetric: Function }}
+ * @returns {JSX.Element}
  */
 export default function MetricSelector({ metric, setMetric }) {
   const options = [
-    { key: "danceability", label: "Danceability" },
-    { key: "energy", label: "Energy" },
-    { key: "tempo", label: "Tempo (BPM)" },
-    { key: "acousticness", label: "Acousticness" },
-    { key: "instrumentalness", label: "Instrumentalness" },
+    { key: "avg_danceability", label: "Danceability" },
+    { key: "avg_energy", label: "Energy" },
+    { key: "avg_tempo", label: "Tempo" },
+    { key: "avg_acousticness", label: "Acousticness" },
+    { key: "avg_instrumentalness", label: "Instrumentalness" },
   ];
 
   return (

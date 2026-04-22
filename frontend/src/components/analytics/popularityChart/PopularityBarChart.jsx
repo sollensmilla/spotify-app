@@ -18,7 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip);
 /**
  * Renders a bar chart showing average values of a selected metric across popularity buckets.
  * 
- * @param {{ labels: string[], values: number[], buckets: Object, metric: string, onBucketClick: Function }} param0 - The props object containing the labels for the x-axis, the average values for each bucket, the buckets of tracks, the currently selected metric, and a function to call when a bucket is clicked.
+ * @param {{ labels: string[], values: number[], buckets: any[], metric: string, onBucketClick: Function }} param0 - The props for the component, including labels, values, buckets, selected metric, and click handler for buckets.
  * @returns {JSX.Element} - The rendered PopularityBarChart component.
  */
 export default function PopularityBarChart({
@@ -28,12 +28,22 @@ export default function PopularityBarChart({
   metric,
   onBucketClick,
 }) {
+  const labelMap = {
+    avg_danceability: "Danceability",
+    avg_energy: "Energy",
+    avg_tempo: "Tempo",
+    avg_acousticness: "Acousticness",
+    avg_instrumentalness: "Instrumentalness",
+  };
+
   const data = {
     labels,
     datasets: [
       {
-        label: `Avg ${metric}`,
+        label: `Avg ${labelMap[metric] || metric}`,
+
         data: values,
+
         backgroundColor: [
           "#4c78a8",
           "#72b7b2",
@@ -41,6 +51,7 @@ export default function PopularityBarChart({
           "#e45756",
           "#54a24b",
         ],
+
         borderRadius: 8,
       },
     ],
@@ -60,9 +71,7 @@ export default function PopularityBarChart({
         callbacks: {
           label: (context) => {
             const index = context.dataIndex;
-            const key = labels[index];
-
-            const count = buckets[key].length;
+            const count = buckets[index].count;
             const value = context.raw.toFixed(2);
 
             return `Avg: ${value} (${count} tracks) → click to explore`;
