@@ -8,6 +8,16 @@ import { useEffect, useState } from "react";
 import { fetchAnalytics, fetchTracksPage } from "../services/trackService";
 import PopularityChart from "../components/analytics/popularityChart/PopularityChart";
 import TopLists from "../components/analytics/topLists/TopLists";
+import Pagination from "../components/analytics/popularityChart/Pagination";
+
+/**
+ * Helper: parse bucket string like "21-40"
+ */
+const parseBucket = (bucket) => {
+  if (!bucket) return null;
+  const [min, max] = bucket.split("-").map(Number);
+  return { min, max };
+};
 
 /**
  * Renders the Analytics page, which includes a popularity insights section
@@ -45,8 +55,10 @@ export default function Analytics() {
     setSelectedBucket(bucket);
     setPage(1);
 
-    const [min, max] = bucket.split("-").map(Number);
-    const offset = 0;
+    const parsed = parseBucket(bucket);
+    if (!parsed) return;
+
+    const { min, max } = parsed;
 
     const pageData = await fetchTracksPage(
       {
@@ -54,7 +66,7 @@ export default function Analytics() {
         maxPopularity: max,
       },
       pageSize,
-      offset
+      0
     );
 
     setTracks(pageData.items);
@@ -65,9 +77,15 @@ export default function Analytics() {
    * Pagination handler
    */
   const handlePageChange = async (newPage) => {
+    if (!selectedBucket) return;
+
     setPage(newPage);
 
-    const [min, max] = selectedBucket.split("-").map(Number);
+    const parsed = parseBucket(selectedBucket);
+    if (!parsed) return;
+
+    const { min, max } = parsed;
+
     const offset = (newPage - 1) * pageSize;
 
     const pageData = await fetchTracksPage(
@@ -109,25 +127,11 @@ export default function Analytics() {
             </div>
           ))}
 
-          <div style={{ marginTop: "1rem" }}>
-            <button
-              disabled={page === 1}
-              onClick={() => handlePageChange(page - 1)}
-            >
-              Prev
-            </button>
-
-            <span style={{ margin: "0 10px" }}>
-              Page {page} / {totalPages || 1}
-            </span>
-
-            <button
-              disabled={page === totalPages}
-              onClick={() => handlePageChange(page + 1)}
-            >
-              Next
-            </button>
-          </div>
+          <Pagination
+            page={page}
+            totalPages={totalPages || 1}
+            onPageChange={handlePageChange}
+          />
         </div>
       )}
 
