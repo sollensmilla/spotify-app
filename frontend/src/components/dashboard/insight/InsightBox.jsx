@@ -5,6 +5,7 @@
  */
 
 import InsightStats from "./InsightStats";
+import { getClusterVibe } from "../../../utils/vibeUtils";
 import { calculateAverages, getEnergyLabel } from "./insightUtils";
 
 /**
@@ -44,17 +45,46 @@ tracks.forEach((t) => {
         energy.
       </p>
 
-      <div className="mt-4 text-sm">
+<div className="mt-4 space-y-3">
   {Object.entries(clusters).map(([id, ts]) => {
-    const avgEnergy =
-      ts.reduce((s, t) => s + t.energy, 0) / ts.length;
+const avgEnergy =
+  ts.reduce((s, t) => s + t.energy, 0) / ts.length;
 
-    const avgTempo =
-      ts.reduce((s, t) => s + t.tempo, 0) / ts.length;
+const avgTempo =
+  ts.reduce((s, t) => s + t.tempo, 0) / ts.length;
 
+const avgAcousticness =
+  ts.reduce((s, t) => s + t.acousticness, 0) / ts.length;
+
+const avgInstrumentalness =
+  ts.reduce((s, t) => s + t.instrumentalness, 0) / ts.length;
+
+const avgDanceability =
+  ts.reduce((s, t) => s + t.danceability, 0) / ts.length;
+
+const vibe = getClusterVibe({
+  avgEnergy,
+  avgTempo,
+  avgAcousticness,
+  avgInstrumentalness,
+  avgDanceability,
+});
     return (
-      <div key={id}>
-        Cluster {id}: {ts.length} tracks — {avgTempo.toFixed(0)} BPM, energy {avgEnergy.toFixed(2)}
+      <div
+        key={id}
+        className="p-4 rounded-xl bg-gray-50 border border-gray-100 shadow-sm"
+      >
+        <div className="font-semibold text-gray-800">
+          {vibe.label}
+        </div>
+
+        <div className="text-sm text-gray-500 mb-1">
+          {vibe.description}
+        </div>
+
+        <div className="text-xs text-gray-400">
+          {ts.length} tracks • {avgTempo.toFixed(0)} BPM • energy {avgEnergy.toFixed(2)}
+        </div>
       </div>
     );
   })}
