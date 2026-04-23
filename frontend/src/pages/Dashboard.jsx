@@ -6,6 +6,8 @@
 
 import { useState, useEffect } from "react";
 import { fetchTracksPage } from "../services/trackService";
+import { clusterTracks } from "../utils/clustering";
+
 import Filters from "../components/dashboard/filters/Filters";
 import TrackList from "../components/dashboard/tracks/TrackList";
 import InsightBox from "../components/dashboard/insight/InsightBox";
@@ -56,8 +58,10 @@ export default function Dashboard({ token }) {
         (page - 1) * limit
       );
 
-      setTracks(data.items);
-      setTotal(data.total);
+const clustered = clusterTracks(data.items, 3);
+
+setTracks(clustered);
+setTotal(data.total);
     } catch (err) {
       setError("Failed to load tracks");
       setTracks([]);

@@ -17,6 +17,13 @@ export default function InsightBox({ tracks }) {
 
   const { avgTempo, avgEnergy } = calculateAverages(tracks);
 
+  const clusters = {};
+
+tracks.forEach((t) => {
+  if (!clusters[t.cluster]) clusters[t.cluster] = [];
+  clusters[t.cluster].push(t);
+});
+
   return (
     <div className="mt-6 p-5 bg-white rounded-2xl shadow-md border border-gray-100">
       <h3 className="text-lg font-semibold text-gray-800 mb-3">
@@ -36,6 +43,22 @@ export default function InsightBox({ tracks }) {
         </span>{" "}
         energy.
       </p>
+
+      <div className="mt-4 text-sm">
+  {Object.entries(clusters).map(([id, ts]) => {
+    const avgEnergy =
+      ts.reduce((s, t) => s + t.energy, 0) / ts.length;
+
+    const avgTempo =
+      ts.reduce((s, t) => s + t.tempo, 0) / ts.length;
+
+    return (
+      <div key={id}>
+        Cluster {id}: {ts.length} tracks — {avgTempo.toFixed(0)} BPM, energy {avgEnergy.toFixed(2)}
+      </div>
+    );
+  })}
+</div>
     </div>
   );
 }
