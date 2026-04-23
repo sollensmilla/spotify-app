@@ -28,6 +28,8 @@ export default function ChartView({ tracks }) {
 
   const { avgTempo, avgEnergy } = calculateAverages(tracks);
 
+  const colors = ["#ef4444", "#3b82f6", "#22c55e", "#a855f7"];
+
   const data = {
     datasets: [
       {
@@ -36,8 +38,8 @@ export default function ChartView({ tracks }) {
           x: t.tempo,
           y: t.energy,
         })),
-        pointBackgroundColor: tracks.map((t) =>
-          t.energy > 0.7 ? "red" : t.energy > 0.4 ? "orange" : "blue"
+        pointBackgroundColor: tracks.map(
+          (t) => colors[t.cluster] || "#999"
         ),
         pointRadius: tracks.map((t) => t.popularity / 20),
       },
@@ -50,40 +52,47 @@ export default function ChartView({ tracks }) {
     ],
   };
 
-const options = {
-  scales: {
-    x: { title: { display: true, text: "Tempo (BPM)" } },
-    y: { title: { display: true, text: "Energy" }, min: 0, max: 1 },
-  },
-  plugins: {
-    tooltip: {
-      callbacks: {
-        label: function (context) {
-          const track = tracks[context.dataIndex];
+  const options = {
+    scales: {
+      x: { title: { display: true, text: "Tempo (BPM)" } },
+      y: { title: { display: true, text: "Energy" }, min: 0, max: 1 },
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const track = tracks[context.dataIndex];
 
-          if (!track) {
-            return `Average — ${avgTempo.toFixed(0)} BPM, Energy: ${avgEnergy.toFixed(2)}`;
-          }
+            if (!track) {
+              return `Average — ${avgTempo.toFixed(0)} BPM, Energy: ${avgEnergy.toFixed(2)}`;
+            }
 
-          return `${track.track_name} — ${track.tempo} BPM, Energy: ${track.energy}`;
+            return `${track.track_name} — ${track.tempo} BPM, Energy: ${track.energy} (Cluster ${track.cluster})`;
+          },
         },
       },
     },
-  },
-};
+  };
 
   return (
-<div style={{ marginTop: "2rem" }}>
-  <h3>Visualization</h3>
+    <div style={{ marginTop: "2rem" }}>
+      <h3>Visualization</h3>
 
-  <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginBottom: "0.5rem" }}>
-    <LegendItem color="red" label="High energy (> 0.7)" />
-    <LegendItem color="orange" label="Medium energy (0.4 - 0.7)" />
-    <LegendItem color="blue" label="Low energy (< 0.4)" />
-    <LegendItem color="black" label="Average" />
-  </div>
+      <div
+        style={{
+          display: "flex",
+          gap: "1rem",
+          justifyContent: "center",
+          marginBottom: "0.5rem",
+        }}
+      >
+        <LegendItem color="#ef4444" label="Cluster 0" />
+        <LegendItem color="#3b82f6" label="Cluster 1" />
+        <LegendItem color="#22c55e" label="Cluster 2" />
+        <LegendItem color="black" label="Average" />
+      </div>
 
-  <ChartScatter data={data} options={options} />
-</div>
+      <ChartScatter data={data} options={options} />
+    </div>
   );
 }
