@@ -161,12 +161,12 @@ export const fetchTracksPage = async (filters = {}, limit = 25, offset = 0) => {
       maxTempo: filters.tempoMax,
       minDanceability: filters.danceabilityMin,
       maxDanceability: filters.danceabilityMax,
-      minPopularity: filters.minPopularity,
-      maxPopularity: filters.maxPopularity,
-      minAcousticness: filters.acousticnessMin,
-      maxAcousticness: filters.acousticnessMax,
-      minInstrumentalness: filters.instrumentalnessMin,
-      maxInstrumentalness: filters.instrumentalnessMax,
+      minPopularity: filters.popularityMin,
+      maxPopularity: filters.popularityMax,
+    minAcousticness: filters.acousticnessMin,
+    maxAcousticness: filters.acousticnessMax,
+    minInstrumentalness: filters.instrumentalnessMin,
+    maxInstrumentalness: filters.instrumentalnessMax,
       ...(filters.explicit !== null && { explicit: filters.explicit }),
       ...(filters.genre && { genre: filters.genre }),
       ...(filters.name && { name: filters.name }),
@@ -174,7 +174,7 @@ export const fetchTracksPage = async (filters = {}, limit = 25, offset = 0) => {
     }
   }
 
-  const res = await apiClient.post('', { query, variables })
+const res = await apiClient.post('', { query, variables })
 
-  return res.data.data.tracks
+return res.data.data.tracks
 }
