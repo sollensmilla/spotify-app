@@ -10,7 +10,7 @@
  * @param {{ topTracks: Array }} param0 
  * @returns {JSX.Element|null} - The rendered TopLists component or null if no tracks are provided.
  */
-export default function TopLists({ topTracks }) {
+export default function TopTracks({ topTracks }) {
   if (!topTracks?.length) return null;
 
   const fallback = "/images/default.png";
@@ -18,6 +18,7 @@ export default function TopLists({ topTracks }) {
   return (
     <div
       style={{
+        flex: "1",
         marginTop: "2rem",
         background: "#1e1e1e",
         padding: "20px",
@@ -42,7 +43,7 @@ export default function TopLists({ topTracks }) {
               borderRadius: "12px",
               marginBottom: "10px",
               background: "#2a2a2a",
-              transition: "0.2s"
+              transition: "0.2s",
             }}
           >
             <div

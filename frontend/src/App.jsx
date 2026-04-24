@@ -12,6 +12,8 @@ function App() {
   const location = useLocation();
 
   const isDashboard = location.pathname === "/dashboard";
+  const isAnalytics = location.pathname === "/analytics";
+  const isTopLists = location.pathname === "/toplists";
 
   return (
     <div>
@@ -42,20 +44,35 @@ function App() {
               </button>
             </Link>
 
-            <Link to="/analytics">
-              <button
-                style={{
-                  padding: "0.5rem 1rem",
-                  borderRadius: "999px",
-                  border: "none",
-                  background: !isDashboard ? "#000" : "#eee",
-                  color: !isDashboard ? "#fff" : "#000",
-                  cursor: "pointer"
-                }}
-              >
-                Analytics
-              </button>
-            </Link>
+<Link to="/analytics">
+  <button
+    style={{
+      padding: "0.5rem 1rem",
+      borderRadius: "999px",
+      border: "none",
+      background: isAnalytics ? "#000" : "#eee",
+      color: isAnalytics ? "#fff" : "#000",
+      cursor: "pointer"
+    }}
+  >
+    Analytics
+  </button>
+</Link>
+
+            <Link to="/toplists">
+  <button
+    style={{
+      padding: "0.5rem 1rem",
+      borderRadius: "999px",
+      border: "none",
+      background: isTopLists ? "#000" : "#eee",
+      color: isTopLists ? "#fff" : "#000",
+      cursor: "pointer"
+    }}
+  >
+    Top Lists
+  </button>
+</Link>
           </div>
 
           <button

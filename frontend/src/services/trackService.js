@@ -101,6 +101,7 @@ export const fetchAnalytics = async () => {
         topArtists {
           artist_name
           count
+          average_popularity
         }
         popularityBuckets {
           bucket
