@@ -2,6 +2,7 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import AnalyticsView from "./pages/Analytics";
+import TopListsPage from "./pages/TopLists";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/routing/ProtectedRoute";
 
@@ -28,7 +29,11 @@ export const router = createBrowserRouter([
           {
             path: "analytics",
             element: <AnalyticsView />
-          }
+          },
+              {
+      path: "toplists",
+      element: <TopListsPage />
+    }
         ]
       }
     ]
