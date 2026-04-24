@@ -1,17 +1,17 @@
 /**
  * Track Service: Handles fetching tracks and analytics data from the backend GraphQL API.
- * 
+ *
  * @author Smilla Sollén
  */
 
-import apiClient from "./apiClient";
+import apiClient from './apiClient'
 
 /**
  * Fetches tracks based on the provided filters.
  * Used in Dashboard (small dataset for performance).
- * 
- * @param {Object} filters
- * @returns {Promise<Array>}
+ *
+ * @param {object} filters - The filter criteria for fetching tracks.
+ * @returns {Promise<Array>} - An array of track objects matching the filters.
  */
 export const fetchTracks = async (filters = {}) => {
   const query = `
@@ -39,7 +39,7 @@ export const fetchTracks = async (filters = {}) => {
         }
       }
     }
-  `;
+  `
 
   const variables = {
     limit: 25,
@@ -62,25 +62,24 @@ export const fetchTracks = async (filters = {}) => {
       ...(filters.name && { name: filters.name }),
       ...(filters.key !== null && filters.key !== undefined
         ? { key: filters.key }
-        : {}),
-    },
-  };
+        : {})
+    }
+  }
 
   try {
-    const res = await apiClient.post("", { query, variables });
-    return res.data.data.tracks.items;
+    const res = await apiClient.post('', { query, variables })
+    return res.data.data.tracks.items
   } catch (err) {
-    console.error("Error fetching tracks:", err.response?.data || err);
-    return [];
+    console.error('Error fetching tracks:', err.response?.data || err)
+    return []
   }
-};
+}
 
 /**
  * Fetches precomputed analytics (top tracks, artists, etc.)
  * Optional helper for analytics page.
- * 
- * @param {string} token
- * @returns {Promise<Object>}
+ *
+ * @returns {Promise<object>} - The fetched analytics data.
  */
 export const fetchAnalytics = async () => {
   const query = `
@@ -114,16 +113,16 @@ export const fetchAnalytics = async () => {
         }
       }
     }
-  `;
+  `
 
   try {
-    const res = await apiClient.post("", { query });
-    return res.data.data.analytics;
+    const res = await apiClient.post('', { query })
+    return res.data.data.analytics
   } catch (err) {
-    console.error("Error fetching analytics:", err.response?.data || err);
-    return null;
+    console.error('Error fetching analytics:', err.response?.data || err)
+    return null
   }
-};
+}
 
 export const fetchTracksPage = async (filters = {}, limit = 25, offset = 0) => {
   const query = `
@@ -150,7 +149,7 @@ export const fetchTracksPage = async (filters = {}, limit = 25, offset = 0) => {
         }
       }
     }
-  `;
+  `
 
   const variables = {
     limit,
@@ -171,11 +170,11 @@ export const fetchTracksPage = async (filters = {}, limit = 25, offset = 0) => {
       ...(filters.explicit !== null && { explicit: filters.explicit }),
       ...(filters.genre && { genre: filters.genre }),
       ...(filters.name && { name: filters.name }),
-      ...(filters.key !== null && filters.key !== undefined ? { key: filters.key } : {}),
-    },
-  };
+      ...(filters.key !== null && filters.key !== undefined ? { key: filters.key } : {})
+    }
+  }
 
-  const res = await apiClient.post("", { query, variables });
+  const res = await apiClient.post('', { query, variables })
 
-  return res.data.data.tracks;
-};
+  return res.data.data.tracks
+}

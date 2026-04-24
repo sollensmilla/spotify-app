@@ -1,83 +1,83 @@
 /**
  * FilterConfig: Defines the configuration for range, select, and text filters used in the dashboard, including labels, keys, options, and styling information.
- * 
+ *
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */
 
 export const rangeFilters = [
   {
-    label: "Energy",
-    color: "linear-gradient(90deg, #cb5656, #930303)",
-    minKey: "energyMin",
-    maxKey: "energyMax",
+    label: 'Energy',
+    color: 'linear-gradient(90deg, #cb5656, #930303)',
+    minKey: 'energyMin',
+    maxKey: 'energyMax',
     min: 0,
     max: 1,
-    step: 0.01,
+    step: 0.01
   },
   {
-    label: "Tempo",
-    color: "linear-gradient(90deg, #9ee49e, #1b6901)",
-    minKey: "tempoMin",
-    maxKey: "tempoMax",
+    label: 'Tempo',
+    color: 'linear-gradient(90deg, #9ee49e, #1b6901)',
+    minKey: 'tempoMin',
+    maxKey: 'tempoMax',
     min: 0,
-    max: 200,
+    max: 200
   },
   {
-    label: "Danceability",
-    color: "linear-gradient(90deg, #c079be, #7a066e)",
-    minKey: "danceabilityMin",
-    maxKey: "danceabilityMax",
-    min: 0,
-    max: 1,
-    step: 0.01,
-  },
-  {
-    label: "Popularity",
-    color: "linear-gradient(90deg, #9be5de, #0c8e92)",
-    minKey: "popularityMin",
-    maxKey: "popularityMax",
-    min: 0,
-    max: 100,
-  },
-  {
-    label: "Acousticness",
-    color: "linear-gradient(90deg, #c9e3f9, #0c0090)",
-    minKey: "acousticnessMin",
-    maxKey: "acousticnessMax",
+    label: 'Danceability',
+    color: 'linear-gradient(90deg, #c079be, #7a066e)',
+    minKey: 'danceabilityMin',
+    maxKey: 'danceabilityMax',
     min: 0,
     max: 1,
-    step: 0.01,
+    step: 0.01
   },
   {
-    label: "Instrumentalness",
-    color: "linear-gradient(90deg, #f58518, #e45756)",
-    minKey: "minInstrumentalness",
-    maxKey: "maxInstrumentalness",
+    label: 'Popularity',
+    color: 'linear-gradient(90deg, #9be5de, #0c8e92)',
+    minKey: 'popularityMin',
+    maxKey: 'popularityMax',
+    min: 0,
+    max: 100
+  },
+  {
+    label: 'Acousticness',
+    color: 'linear-gradient(90deg, #c9e3f9, #0c0090)',
+    minKey: 'acousticnessMin',
+    maxKey: 'acousticnessMax',
     min: 0,
     max: 1,
-    step: 0.01,
+    step: 0.01
+  },
+  {
+    label: 'Instrumentalness',
+    color: 'linear-gradient(90deg, #f58518, #e45756)',
+    minKey: 'minInstrumentalness',
+    maxKey: 'maxInstrumentalness',
+    min: 0,
+    max: 1,
+    step: 0.01
   }
-];
+]
 
 export const selectFilters = [
   {
-    label: "Explicit",
-    key: "explicit",
+    label: 'Explicit',
+    key: 'explicit',
     options: [
-      { value: "", label: "All" },
-      { value: "true", label: "Explicit" },
-      { value: "false", label: "Clean" },
-    ],
-  },
-];
+      { value: '', label: 'All' },
+      { value: 'true', label: 'Explicit' },
+      { value: 'false', label: 'Clean' }
+    ]
+  }
+]
 
 export const textFilters = [
   {
-    label: "Genre",
-    key: "genre",
+    label: 'Genre',
+    key: 'genre'
   },
   {
-    label: "Track name",
-    key: "name",
-  },
-];
+    label: 'Track name',
+    key: 'name'
+  }
+]

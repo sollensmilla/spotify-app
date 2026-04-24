@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      "/graphql": "https://spotify-api-production-82d8.up.railway.app"
+      '/graphql': 'https://spotify-api-production-82d8.up.railway.app'
     }
   }
-});
+})

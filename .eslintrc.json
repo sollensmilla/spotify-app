@@ -1,0 +1,11 @@
+{
+  "extends": "@lnu/eslint-config",
+  "rules": {
+    "jsdoc/require-description": "off",
+    "jsdoc/require-param-description": "off",
+    "jsdoc/require-param-type": "off",
+    "jsdoc/require-returns": "off",
+    "jsdoc/require-jsdoc": "off",
+    "camelcase": "off"
+  }
+}
