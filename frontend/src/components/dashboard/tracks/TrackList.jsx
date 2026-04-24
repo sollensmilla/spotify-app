@@ -34,12 +34,12 @@ export default function TrackList({ tracks, page, totalPages, onPageChange }) {
                 <th className="px-4 py-3">Title</th>
                 <th className="px-4 py-3">Genre</th>
                 <th className="px-4 py-3">Energy</th>
-                <th className="px-4 py-3">Dance</th>
+                <th className="px-4 py-3">Danceability</th>
                 <th className="px-4 py-3">Tempo</th>
                 <th className="px-4 py-3">Key</th>
-                <th className="px-4 py-3">Pop</th>
-                <th className="px-4 py-3">Acoustic</th>
-                <th className="px-4 py-3">Instrumental</th>
+                <th className="px-4 py-3">Popularity</th>
+                <th className="px-4 py-3">Acousticness</th>
+                <th className="px-4 py-3">Instrumentalness</th>
                 <th className="px-4 py-3">Explicit</th>
               </tr>
             </thead>
