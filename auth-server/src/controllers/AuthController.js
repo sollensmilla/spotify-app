@@ -177,7 +177,7 @@ export class AuthController {
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       res.json(decoded)
-    } catch {
+    } catch (err) {
       console.error('JWT ERROR:', err)
       res.status(401).json({ error: 'Token expired or invalid' })
     }
