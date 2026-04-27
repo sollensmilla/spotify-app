@@ -47,6 +47,13 @@ export default function Analytics() {
     <div style={{ padding: "2rem" }}>
       <h1>Analytics</h1>
 
+      <p style={{ maxWidth: "700px", marginBottom: "1rem", color: "#555" }}>
+  Explore how different track attributes relate to popularity. You can filter
+  tracks by various attributes and view how they are grouped into popularity
+  buckets. Each bar shows the average values for that group. Click on a bar to
+  see all tracks included in that bucket.
+</p>
+
       <PopularityChart
         buckets={analytics.popularityBuckets}
         onBucketClick={selectBucket}
