@@ -1,8 +1,4 @@
 /**
- * TopArtists: Displays top artists ranked by number of tracks.
- */
-
-/**
  * Renders a list of the top 10 artists based on track count.
  * 
  * @param {{ topArtists: Array }} param0 - The props object containing the list of top artists.

@@ -1,10 +1,4 @@
 /**
- * LegendItem: A React component that renders a legend item for a chart, displaying a colored circle and a label to indicate the meaning of different data points in the chart.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
-/**
  * Renders a legend item for a chart, displaying a colored circle and a label.
  * @param {{ color: string, label: string }} param0 - The props object containing the color and label for the legend item.
  * @returns {JSX.Element} - The rendered LegendItem component.

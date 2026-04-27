@@ -1,3 +1,10 @@
+/**
+ * Determines the vibe of a cluster based on its average track attributes.
+ * @param {Object} param0 - The average attributes of the cluster.
+ * @param {number} param0.avgEnergy - The average energy of tracks in the cluster.
+ * @param {number} param0.avgTempo - The average tempo of tracks in the cluster.
+ * @returns {Object} - The vibe description for the cluster.
+ */
 export function getClusterVibe ({
   avgEnergy,
   avgTempo,

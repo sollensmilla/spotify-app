@@ -1,9 +1,3 @@
-/**
- * PopularityChart: Main component for the popularity insights section.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
 import { useState } from "react";
 import MetricSelector from "./MetricSelector";
 import PopularityBarChart from "./PopularityBarChart";

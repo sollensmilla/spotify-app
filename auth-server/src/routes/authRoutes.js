@@ -1,5 +1,5 @@
 /**
- * Auth Routes: Defines the routes for authentication, including GitHub and Google OAuth, as well as user session management.
+ * Auth Routes: Defines the routes for authentication, including GitHub and Google OAuth, as well as user session management in the /me endpoint.
  *
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */

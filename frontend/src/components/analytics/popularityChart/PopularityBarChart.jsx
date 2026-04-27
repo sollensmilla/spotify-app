@@ -1,9 +1,3 @@
-/**
- * PopularityBarChart: Renders a bar chart showing average values of a selected metric across popularity buckets.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
 import {
   Chart as ChartJS,
   CategoryScale,

@@ -1,9 +1,3 @@
-/**
- * Filters: A React component that renders a set of filters for the dashboard, allowing users to filter tracks based on various attributes such as energy, tempo, key, and more.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
 import RangeFilter from "./RangeFilter";
 import SelectFilter from "./SelectFilter";
 import TextFilter from "./TextFilter";

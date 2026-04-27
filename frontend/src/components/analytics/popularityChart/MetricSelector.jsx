@@ -1,10 +1,4 @@
 /**
- * Component for selecting which audio feature to display in the popularity chart.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
-/**
  * MetricSelector: A component for selecting which audio feature to display in the popularity chart.
  * 
  * @param {{ metric: string, setMetric: Function }}

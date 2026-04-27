@@ -1,5 +1,5 @@
 /**
- * Login: A React page that provides a user interface for logging in to the application using GitHub or Google authentication. It utilizes the AuthContext to manage authentication state and handles loading and error states during the login process.
+ * Login: A React page that provides a user interface for logging in to the application using GitHub or Google authentication. 
  * 
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */

@@ -1,9 +1,4 @@
 /**
- * Component for rendering pagination controls.
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
-/**
  * Renders a pagination component for navigating between pages.
  * 
  * @param {{ page: number, totalPages: number, onPageChange: Function }} param0 - The props for the component, including current page, total pages, and page change handler.

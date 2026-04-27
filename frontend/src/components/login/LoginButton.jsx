@@ -1,11 +1,4 @@
 /**
- * LoginButton: A React component that renders a button for logging in with a specified provider (e.g., GitHub or Google). The button displays an icon and text, and it handles loading states to indicate when a login process is in progress.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
-
-/**
  * Renders a login button for a specified provider.
  * @param {*} param0 - The props object containing the button configuration.
  * @returns {JSX.Element} - The rendered login button.

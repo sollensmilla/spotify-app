@@ -16,6 +16,7 @@ import { fetchTracksPage } from '../services/trackService'
 const parseBucket = (bucket) => {
   if (!bucket) return null
 
+  // Expecting format "min-max"
   const [min, max] = bucket.split('-').map(Number)
   if (isNaN(min) || isNaN(max)) return null
 

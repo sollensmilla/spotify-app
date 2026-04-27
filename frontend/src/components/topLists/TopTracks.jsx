@@ -1,10 +1,4 @@
 /**
- * TopLists: A React component that displays the top 10 most popular songs in a styled list format, including track name, artists, albums, and popularity score.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
-/**
  * Renders a list of the top 10 most popular tracks.
  * 
  * @param {{ topTracks: Array }} param0 

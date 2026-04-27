@@ -1,9 +1,3 @@
-/**
- * RangeFilter: A React component that renders a range slider for filtering tracks based on a specific attribute (e.g., energy, tempo).
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 

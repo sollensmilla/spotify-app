@@ -1,10 +1,4 @@
 /**
- * TextFilter: A React component that renders a text input field for filtering tracks based on a specific attribute (e.g., track name, artist name). The component displays a label and allows users to enter text to filter the tracks accordingly. It supports custom styling through CSS classes.
- * 
- * @author Smilla Sollén <ss226uk@student.lnu.se>
- */
-
-/**
  * Renders a text input field for filtering tracks based on a specific attribute.
  * @param {{ label: String, value: String, onChange: Function }} param0 - The props object containing the label, current value, and change handler.
  * @returns {JSX.Element} - The rendered TextFilter component.

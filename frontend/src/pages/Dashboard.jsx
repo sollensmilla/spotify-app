@@ -1,5 +1,5 @@
 /**
- * Dashboard: A React page that serves as the main interface for users to explore and filter music tracks based on various attributes. It fetches track data from the backend based on the applied filters and handles loading and error states accordingly.
+ * Dashboard: A React page that serves as the main interface for users to explore and filter music tracks based on various attributes. 
  * 
  * @author Smilla Sollén <ss226uk@student.lnu.se>
  */

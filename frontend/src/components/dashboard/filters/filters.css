@@ -1,3 +1,9 @@
+/**
+ * Custom CSS styles for the filter sliders in the dashboard, that could not be easily achived with inline tailwind styling.
+ *
+ * @author Smilla Sollén <ss226uk@student.lnu.se>
+ */
+
 .rc-slider {
     margin: 20px 0;
 }
