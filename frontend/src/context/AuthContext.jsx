@@ -7,7 +7,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
-const API_URL = "https://auth-server-production-a8c7.up.railway.app/";
+const API_URL = "https://auth-server-production-a8c7.up.railway.app";
 
 /**
  * AuthProvider: A React component that provides authentication state and functions to its child components.
