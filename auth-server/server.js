@@ -9,21 +9,8 @@ app.use(cookieParser())
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
 
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://spotify-app-production-6203.up.railway.app'
-]
-
 app.use(cors({
-  origin: function (origin, callback) {
-    console.log('Incoming origin:', origin)
-
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
+  origin: FRONTEND_URL,
   credentials: true
 }))
 
