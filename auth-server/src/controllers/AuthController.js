@@ -166,8 +166,6 @@ export class AuthController {
    * @param {object} res - The response object.
    */
   me (req, res) {
-    console.log('Cookies:', req.cookies)
-    console.log('JWT_SECRET exists:', !!process.env.JWT_SECRET)
     const token = req.cookies.jwt
 
     if (!token) {
