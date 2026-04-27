@@ -16,6 +16,10 @@ app.use(cors({
 
 app.use('/auth', authRoutes)
 
+app.get('/', (req, res) => {
+  res.send('Auth server is running')
+})
+
 const PORT = process.env.PORT || 3001
 
 app.listen(PORT, '0.0.0.0', () => {
