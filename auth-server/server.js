@@ -1,7 +1,7 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
-// import authRoutes from './src/routes/authRoutes.js'
+import authRoutes from './src/routes/authRoutes.js'
 
 const app = express()
 
@@ -14,7 +14,7 @@ app.use(cors({
   credentials: true
 }))
 
-//app.use('/auth', authRoutes)
+app.use('/auth', authRoutes)
 
 app.get('/', (req, res) => {
   res.send('Auth server is running')
@@ -25,3 +25,7 @@ const PORT = process.env.PORT || 3001
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Auth server running on ${PORT}`)
 })
+
+setInterval(() => {
+  console.log('STILL ALIVE')
+}, 2000)
