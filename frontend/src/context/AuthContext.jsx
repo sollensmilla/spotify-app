@@ -7,6 +7,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
+const API_URL = "https://auth-server-production-a8c7.up.railway.app/";
 
 /**
  * AuthProvider: A React component that provides authentication state and functions to its child components.
@@ -20,7 +21,7 @@ export function AuthProvider({ children }) {
 
     const checkAuth = async () => {
     try {
-      const res = await fetch("http://localhost:3001/auth/me", {
+      const res = await fetch(`${API_URL}auth/me`, {
         credentials: "include",
       });
 
@@ -39,16 +40,16 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGithub = () => {
-    window.location.href = "http://localhost:3001/auth/github";
+    window.location.href = `${API_URL}auth/github`;
   };
 
   const loginWithGoogle = () => {
-    window.location.href = "http://localhost:3001/auth/google";
+    window.location.href = `${API_URL}auth/google`;
   };
 
   const logout = async () => {
     try {
-    await fetch("http://localhost:3001/auth/logout", {
+    await fetch(`${API_URL}auth/logout`, {
       method: "POST",
       credentials: "include"
     });
