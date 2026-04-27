@@ -14,7 +14,7 @@ app.use(cors({
   credentials: true
 }))
 
-app.use('/auth', authRoutes)
+//app.use('/auth', authRoutes)
 
 app.get('/', (req, res) => {
   res.send('Auth server is running')
