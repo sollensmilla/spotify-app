@@ -38,7 +38,7 @@ export class AuthController {
    * @param {object} req - The request object.
    * @param {object} res - The response object.
    */
-  githubAuth (req, res) {
+  githubAuth(req, res) {
     const url = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=user:email`
     res.redirect(url)
   }
@@ -50,7 +50,7 @@ export class AuthController {
    * @param {object} res - The response object.
    * @returns {Promise<void>} - A promise that resolves when the callback is handled.
    */
-  async githubCallback (req, res) {
+  async githubCallback(req, res) {
     try {
       const { code } = req.query
       if (!code) return res.redirect(FRONTEND_URL)
@@ -104,7 +104,7 @@ export class AuthController {
    * @param {object} req - The request object.
    * @param {object} res - The response object.
    */
-  googleAuth (req, res) {
+  googleAuth(req, res) {
     const url =
       'https://accounts.google.com/o/oauth2/v2/auth?' +
       `client_id=${GOOGLE_CLIENT_ID}` +
@@ -122,7 +122,7 @@ export class AuthController {
    * @param {object} res - The response object.
    * @returns {Promise<void>} - A promise that resolves when the callback is handled.
    */
-  async googleCallback (req, res) {
+  async googleCallback(req, res) {
     try {
       const { code } = req.query
       if (!code) return res.redirect(FRONTEND_URL)
@@ -165,7 +165,7 @@ export class AuthController {
    * @param {object} req - The request object.
    * @param {object} res - The response object.
    */
-  me (req, res) {
+  me(req, res) {
     const token = req.cookies.jwt
 
     if (!token) {
@@ -176,8 +176,12 @@ export class AuthController {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
       res.json(decoded)
     } catch (err) {
-      console.error('JWT ERROR:', err)
-      res.status(401).json({ error: 'Token expired or invalid' })
+      if (err.name === 'TokenExpiredError') {
+        res.clearCookie('jwt', getCookieOptions())
+        return res.status(401).json({ error: 'Token expired' })
+      }
+
+      return res.status(401).json({ error: 'Invalid token' })
     }
   }
 
@@ -187,7 +191,7 @@ export class AuthController {
    * @param {object} req - The request object.
    * @param {object} res - The response object.
    */
-  logout (req, res) {
+  logout(req, res) {
     res.clearCookie('jwt', getCookieOptions())
 
     res.json({ message: 'Logged out' })

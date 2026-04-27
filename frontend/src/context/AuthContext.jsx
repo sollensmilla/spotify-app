@@ -7,7 +7,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext();
-const API_URL = "https://dazzling-learning-production-9c39.up.railway.app";
+const AUTH_URL = import.meta.env.VITE_AUTH_URL;
 
 /**
  * AuthProvider: A React component that provides authentication state and functions to its child components.
@@ -21,7 +21,7 @@ export function AuthProvider({ children }) {
 
     const checkAuth = async () => {
     try {
-      const res = await fetch(`${API_URL}/auth/me`, {
+      const res = await fetch(`${AUTH_URL}/auth/me`, {
         credentials: "include",
       });
 
@@ -40,16 +40,16 @@ export function AuthProvider({ children }) {
   }, []);
 
   const loginWithGithub = () => {
-    window.location.href = `${API_URL}/auth/github`;
+    window.location.href = `${AUTH_URL}/auth/github`;
   };
 
   const loginWithGoogle = () => {
-    window.location.href = `${API_URL}/auth/google`;
+    window.location.href = `${AUTH_URL}/auth/google`;
   };
 
   const logout = async () => {
     try {
-    await fetch(`${API_URL}/auth/logout`, {
+    await fetch(`${AUTH_URL}/auth/logout`, {
       method: "POST",
       credentials: "include"
     });
