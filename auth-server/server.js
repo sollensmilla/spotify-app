@@ -20,8 +20,8 @@ app.get('/', (req, res) => {
   res.send('Auth server is running')
 })
 
-const PORT = process.env.PORT || 3001
+const PORT = Number(process.env.PORT)
 
-app.listen(PORT, () => {
-  console.log(`Auth server running on ${PORT}`)
+app.listen(PORT, '0.0.0.0', () => {
+  console.log('LISTENING ON:', PORT)
 })
