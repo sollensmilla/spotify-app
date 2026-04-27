@@ -6,8 +6,8 @@
 
 import fetch from 'node-fetch'
 import {
-  CLIENT_ID,
-  CLIENT_SECRET,
+  GITHUB_CLIENT_ID,
+  GITHUB_CLIENT_SECRET,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET
 } from '../config/env.js'
@@ -39,7 +39,7 @@ export class AuthController {
    * @param {object} res - The response object.
    */
   githubAuth(req, res) {
-    const url = `https://github.com/login/oauth/authorize?client_id=${CLIENT_ID}&scope=user:email`
+    const url = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&scope=user:email`
     res.redirect(url)
   }
 
@@ -56,8 +56,8 @@ export class AuthController {
       if (!code) return res.redirect(FRONTEND_URL)
 
       const params = new URLSearchParams()
-      params.append('client_id', CLIENT_ID)
-      params.append('client_secret', CLIENT_SECRET)
+      params.append('client_id', GITHUB_CLIENT_ID)
+      params.append('client_secret', GITHUB_CLIENT_SECRET)
       params.append('code', code)
 
       const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
