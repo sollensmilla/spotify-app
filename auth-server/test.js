@@ -1,5 +1,5 @@
-console.log("START")
+console.log('START')
 
 setInterval(() => {
-  console.log("alive")
+  console.log('alive')
 }, 1000)

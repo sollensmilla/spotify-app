@@ -40,7 +40,7 @@ export const fetchTracks = async (filters = {}) => {
       }
     }
   `
-  
+
   const variables = {
     limit: 25,
     filter: {

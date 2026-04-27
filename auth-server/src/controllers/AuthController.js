@@ -14,6 +14,20 @@ import {
 import { loginOrRegister } from '../config/api.js'
 import jwt from 'jsonwebtoken'
 
+const FRONTEND_URL = process.env.FRONTEND_URL
+const BACKEND_URL = process.env.BACKEND_URL
+const isProd = process.env.NODE_ENV === 'production'
+
+/**
+ * Sets cookie options based on the environment (production or development) to ensure proper security and functionality of authentication cookies.
+ */
+const getCookieOptions = () => ({
+  httpOnly: true,
+  secure: isProd,
+  sameSite: isProd ? 'none' : 'lax',
+  path: '/'
+})
+
 /**
  * AuthController: A class that defines methods for handling authentication routes and logic.
  */
@@ -39,7 +53,7 @@ export class AuthController {
   async githubCallback (req, res) {
     try {
       const { code } = req.query
-      if (!code) return res.redirect('http://localhost:5173')
+      if (!code) return res.redirect(FRONTEND_URL)
 
       const params = new URLSearchParams()
       params.append('client_id', CLIENT_ID)
@@ -75,17 +89,12 @@ export class AuthController {
 
       const token = await loginOrRegister(email)
 
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'lax',
-        path: '/'
-      })
+      res.cookie('jwt', token, getCookieOptions())
 
-      res.redirect('http://localhost:5173')
+      res.redirect(FRONTEND_URL)
     } catch (err) {
       console.error(err)
-      res.redirect('http://localhost:5173')
+      res.redirect(FRONTEND_URL)
     }
   }
 
@@ -99,7 +108,7 @@ export class AuthController {
     const url =
       'https://accounts.google.com/o/oauth2/v2/auth?' +
       `client_id=${GOOGLE_CLIENT_ID}` +
-      '&redirect_uri=http://localhost:3001/auth/google/callback' +
+      `&redirect_uri=${BACKEND_URL}/auth/google/callback` +
       '&response_type=code' +
       '&scope=openid email profile'
 
@@ -116,13 +125,13 @@ export class AuthController {
   async googleCallback (req, res) {
     try {
       const { code } = req.query
-      if (!code) return res.redirect('http://localhost:5173')
+      if (!code) return res.redirect(FRONTEND_URL)
 
       const params = new URLSearchParams()
       params.append('client_id', GOOGLE_CLIENT_ID)
       params.append('client_secret', GOOGLE_CLIENT_SECRET)
       params.append('code', code)
-      params.append('redirect_uri', 'http://localhost:3001/auth/google/callback')
+      params.append('redirect_uri', `${BACKEND_URL}/auth/google/callback`)
       params.append('grant_type', 'authorization_code')
 
       const tokenRes = await fetch('https://oauth2.googleapis.com/token', {
@@ -141,17 +150,12 @@ export class AuthController {
 
       const token = await loginOrRegister(googleUser.email)
 
-      res.cookie('jwt', token, {
-        httpOnly: true,
-        secure: false,
-        sameSite: 'lax',
-        path: '/'
-      })
+      res.cookie('jwt', token, getCookieOptions())
 
-      res.redirect('http://localhost:5173')
+      res.redirect(FRONTEND_URL)
     } catch (err) {
       console.error(err)
-      res.redirect('http://localhost:5173')
+      res.redirect(FRONTEND_URL)
     }
   }
 
@@ -183,11 +187,7 @@ export class AuthController {
    * @param {object} res - The response object.
    */
   logout (req, res) {
-    res.clearCookie('jwt', {
-      httpOnly: true,
-      sameSite: 'lax',
-      path: '/'
-    })
+    res.clearCookie('jwt', getCookieOptions())
 
     res.json({ message: 'Logged out' })
   }

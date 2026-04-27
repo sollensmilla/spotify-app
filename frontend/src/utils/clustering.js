@@ -2,6 +2,7 @@ import { kmeans } from 'ml-kmeans'
 
 /**
  * Clusters tracks using K-Means clustering.
+ *
  * @param {Array} tracks - The list of tracks to cluster.
  * @param {number} k - The number of clusters.
  * @returns {Array} - The tracks with added cluster information.
