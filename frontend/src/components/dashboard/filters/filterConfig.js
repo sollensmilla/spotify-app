@@ -51,8 +51,8 @@ export const rangeFilters = [
   {
     label: 'Instrumentalness',
     color: 'linear-gradient(90deg, #f58518, #e45756)',
-    minKey: 'minInstrumentalness',
-    maxKey: 'maxInstrumentalness',
+    minKey: 'instrumentalnessMin',
+    maxKey: 'instrumentalnessMax',
     min: 0,
     max: 1,
     step: 0.01

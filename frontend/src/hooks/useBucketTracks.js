@@ -52,7 +52,7 @@ const validateResponse = (data) => {
  * clear: () => void
  * }} - The hook's state and action handlers.
  */
-export function useBucketTracks (pageSize = 10) {
+export function useBucketTracks(pageSize = 10) {
   const [selectedBucket, setSelectedBucket] = useState(null)
   const [tracks, setTracks] = useState([])
   const [page, setPage] = useState(1)
@@ -79,7 +79,7 @@ export function useBucketTracks (pageSize = 10) {
     const offset = (pageNum - 1) * pageSize
 
     const data = await fetchTracksPage(
-      { minPopularity: min, maxPopularity: max },
+      { popularityMin: min, popularityMax: max },
       pageSize,
       offset
     )
