@@ -61,7 +61,7 @@ export default function ChartView({ tracks }) {
               return `Average — ${avgTempo.toFixed(0)} BPM, Energy: ${avgEnergy.toFixed(2)}`;
             }
 
-            return `${track.track_name} — ${track.tempo} BPM, Energy: ${track.energy} (Cluster ${track.cluster})`;
+            return `${track.track_name} - ${track.artists[0].name} — ${track.tempo} BPM, Energy: ${track.energy} (Cluster ${track.cluster})`;
           },
         },
       },

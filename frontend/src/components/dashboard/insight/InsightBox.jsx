@@ -69,7 +69,7 @@ const vibe = getClusterVibe({
         className="p-4 rounded-xl bg-gray-50 border border-gray-100 shadow-sm"
       >
         <div className="font-semibold text-gray-800">
-          {vibe.label}
+          {vibe.label} - Cluster {id}
         </div>
 
         <div className="text-sm text-gray-500 mb-1">
